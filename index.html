@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GradGuide — Clear guidance for your college journey</title>
+<meta name="description" content="GradGuide is a personalised college guidance platform. Take a quick placement test to find your best-fit course and universities, discover free courses and scholarships, track deadlines, and chat with a guidance counsellor.">
+<meta name="theme-color" content="#4f46e5">
+<meta property="og:type" content="website">
+<meta property="og:title" content="GradGuide — Clear guidance for your college journey">
+<meta property="og:description" content="Find your best-fit course and universities, free courses, scholarships and deadlines — with a guidance counsellor on hand.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234f46e5'/%3E%3Ctext x='16' y='23' font-size='19' font-family='Arial,sans-serif' font-weight='bold' fill='white' text-anchor='middle'%3EG%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --accent:#4f46e5;                                            /* the one colour students pick */
+  --accent-dark:color-mix(in srgb, var(--accent), #000 22%);
+  --accent-soft:color-mix(in srgb, var(--accent), #fff 88%);
+  --bg:#0f1422; --card:#ffffff; --ink:#1b202b; --muted:#6b7280;
+  --line:#e8eaef; --brand:var(--accent); --brand2:color-mix(in srgb, var(--accent), #fff 32%);
+  --gold:#b7791f; --danger:#e25563; --soft:#f7f8fa; --soft2:#eef0f4;
+  --nav-bg:rgba(255,255,255,.92);
+  --radius:16px; --shadow:0 8px 30px rgba(17,20,30,.06); --shadow-lg:0 22px 60px rgba(17,20,30,.14);
+}
+[data-theme="dark"]{
+  --card:#161c28; --ink:#e9edf4; --muted:#9aa3b2;
+  --line:#28303f; --brand:var(--accent); --brand2:color-mix(in srgb, var(--accent), #fff 18%);
+  --soft:#0d121b; --soft2:#1a212e; --nav-bg:rgba(13,18,27,.9);
+  --accent-soft:color-mix(in srgb, var(--accent), #000 60%);
+  --shadow:0 8px 30px rgba(0,0,0,.35); --shadow-lg:0 22px 60px rgba(0,0,0,.5);
+  color-scheme:dark;
+}
+html{transition:background .2s}body{transition:background .2s,color .2s}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{margin:0;padding:0}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  color:var(--ink);background:var(--soft);line-height:1.55;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none}
+button:active,.lcard:active,.clk:active{transform:translateY(0) scale(.985)}
+.clk{cursor:pointer}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:8px}
+.hidden{display:none !important}
+
+/* Nav */
+.nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  padding:12px 28px;background:var(--nav-bg);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;letter-spacing:-.02em;cursor:pointer}
+.logo{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent-dark));display:grid;place-items:center;color:#fff;font-weight:900}
+.nav-links{display:flex;gap:4px;align-items:center}
+.nav-links a.link{color:var(--muted);font-weight:650;font-size:14.5px;padding:8px 12px;border-radius:9px;cursor:pointer}
+.nav-links a.link:hover{color:var(--ink);background:var(--soft2)}
+.nav-links a.link.on{color:var(--brand);background:var(--soft2)}
+.btn{padding:10px 18px;border-radius:11px;font-weight:700;font-size:14.5px;transition:.15s;display:inline-flex;align-items:center;gap:8px}
+.btn-primary{background:var(--brand);color:#fff}.btn-primary:hover{background:#243db8;transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}.btn-ghost:hover{background:var(--soft2)}
+.btn-soft{background:var(--soft2);color:var(--brand)}
+.btn-block{width:100%;justify-content:center}
+.btn-lg{padding:14px 26px;font-size:16px;border-radius:13px}
+.hamb{display:none;width:42px;height:42px;border-radius:10px;background:var(--soft2);place-items:center;font-size:20px}
+.nav-right{display:flex;align-items:center;gap:8px;position:relative}
+.theme-btn,.accent-btn{width:40px;height:40px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);display:grid;place-items:center;flex-shrink:0;transition:.15s}
+.theme-btn:hover,.accent-btn:hover{background:var(--soft2)}
+.theme-btn svg{width:18px;height:18px}
+.accent-btn .dot{width:18px;height:18px;border-radius:50%;background:var(--accent)}
+.accent-pop{position:absolute;top:54px;right:0;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-lg);padding:14px;z-index:90;width:214px}
+.accent-pop h5{margin:0 0 10px;font-size:11.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.sw-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:12px}
+.sw{height:34px;border-radius:9px;cursor:pointer;border:2px solid transparent;transition:.12s}
+.sw:hover{transform:scale(1.07)}.sw.on{border-color:var(--ink)}
+.accent-custom{display:flex;align-items:center;justify-content:space-between;font-size:12.5px;color:var(--muted);font-weight:650;border-top:1px solid var(--line);padding-top:11px}
+.accent-custom input[type=color]{width:32px;height:28px;border:1px solid var(--line);border-radius:7px;background:none;cursor:pointer;padding:1px}
+select,.input,textarea{color:var(--ink)}
+[data-theme="dark"] select,[data-theme="dark"] .cur-sel select{background:var(--card);color:var(--ink)}
+
+/* Pages */
+.page{display:none}.page.active{display:block;animation:fade .25s}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.wrap{max-width:1120px;margin:0 auto;padding:46px 28px}
+.eyebrow{color:var(--brand);font-weight:800;font-size:12.5px;text-transform:uppercase;letter-spacing:.14em}
+.center{text-align:center}
+h2.h{font-size:32px;letter-spacing:-.02em;margin:10px 0 12px;font-weight:820}
+.lead{color:var(--muted);max-width:600px;margin:0 auto;font-size:16.5px}
+
+/* Hero — compact, button-driven */
+.hero{position:relative;overflow:hidden;background:linear-gradient(160deg,#0f1729,#1a2747);color:#fff;padding:64px 28px 56px}
+.hero-inner{max-width:1040px;margin:0 auto;position:relative;z-index:2;text-align:center}
+.pill{display:inline-flex;gap:8px;align-items:center;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);padding:6px 14px;border-radius:999px;font-size:12.5px;font-weight:600;margin-bottom:20px;color:#cdd7ff}
+.hero h1{font-size:46px;line-height:1.06;letter-spacing:-.03em;margin:0 0 16px;font-weight:850}
+.hero h1 span{background:linear-gradient(120deg,#ffffff,color-mix(in srgb,#ffffff,var(--accent) 55%));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{font-size:18px;color:#aeb8d4;max-width:560px;margin:0 auto 26px}
+.hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.glow{position:absolute;border-radius:50%;filter:blur(90px);opacity:.45;z-index:1}
+.glow.a{width:420px;height:420px;background:var(--accent);top:-150px;left:-110px}.glow.b{width:360px;height:360px;background:var(--accent);bottom:-160px;right:-90px}
+
+/* Quick-access launcher cards (transport buttons) */
+.launch{max-width:1040px;margin:-34px auto 0;position:relative;z-index:5;padding:0 28px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.lcard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);cursor:pointer;transition:.18s;text-align:left}
+.lcard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:var(--brand2)}
+.lcard .ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:22px;margin-bottom:12px}
+.lcard b{font-size:16px;display:block}.lcard p{margin:4px 0 0;color:var(--muted);font-size:13.5px}
+.lcard .go{color:var(--brand);font-weight:750;font-size:13px;margin-top:10px;display:inline-block}
+
+.grid{display:grid;gap:20px}.grid-3{grid-template-columns:repeat(3,1fr)}.grid-2{grid-template-columns:repeat(2,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow)}
+.feature{transition:.18s}
+.feature.clk:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:var(--brand2)}
+.feature .fi{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:22px;margin-bottom:14px}
+.feature .go{margin-top:12px;display:inline-block}
+.fi svg,.ic svg,.about-block .ttl .em svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.feature h3{margin:0 0 7px;font-size:18px;font-weight:750}.feature p{margin:0;color:var(--muted);font-size:14.5px}
+
+.band{background:linear-gradient(120deg,#101a36,#21356a);color:#fff;border-radius:22px;padding:44px;text-align:center}
+.band h2{color:#fff;font-size:28px;margin:8px 0 10px}.band p{color:#aeb8d4;max-width:540px;margin:0 auto 22px}
+footer{text-align:center;padding:34px;color:var(--muted);font-size:13.5px;border-top:1px solid var(--line)}
+
+/* About */
+.about-block{display:grid;grid-template-columns:190px 1fr;gap:28px;align-items:start;padding:30px 0;border-bottom:1px solid var(--line)}
+.about-block .ttl{font-size:21px;font-weight:800}.about-block .ttl .em{font-size:28px;display:block;margin-bottom:8px}
+.about-block p{margin:0;font-size:16px;color:var(--ink);line-height:1.7}
+.astat{display:flex;flex-wrap:wrap;justify-content:center;border:1px solid var(--line);border-radius:18px;background:var(--card);box-shadow:var(--shadow);overflow:hidden;margin:26px 0 6px}
+.astat div{flex:1;min-width:150px;padding:22px 16px;text-align:center;border-right:1px solid var(--line)}
+.astat div:last-child{border-right:none}
+.astat b{font-size:26px;font-weight:850;display:block;letter-spacing:-.02em;color:var(--accent)}
+.astat span{color:var(--muted);font-size:13px;font-weight:600}
+.values .fi{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;font-size:20px;margin-bottom:12px}
+.values h4{margin:0 0 6px;font-size:16px}.values p{margin:0;color:var(--muted);font-size:14px}
+.mission-box{background:linear-gradient(120deg,#101a36,#21356a);color:#fff;border-radius:22px;padding:42px;margin:34px 0}
+.mission-box .eyebrow{color:color-mix(in srgb,var(--accent),#fff 55%)}.mission-box p{font-size:20px;line-height:1.6;color:#dbe2f5;margin:12px 0 0;font-weight:500}
+.team{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:12px}
+.tcard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;text-align:center;box-shadow:var(--shadow)}
+.tavatar{width:62px;height:62px;border-radius:50%;margin:0 auto 12px;display:grid;place-items:center;color:#fff;font-weight:850;font-size:22px}
+.tcard b{font-size:16px}.tcard .role{color:var(--brand);font-weight:700;font-size:13px;margin:2px 0 8px}.tcard p{margin:0;color:var(--muted);font-size:13.5px}
+
+/* Contacts */
+.pro-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.pro{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);display:flex;flex-direction:column}
+.pro .top{display:flex;gap:13px;align-items:center;margin-bottom:12px}
+.pro .pic{width:52px;height:52px;border-radius:13px;display:grid;place-items:center;color:#fff;font-size:18px;font-weight:800;letter-spacing:.5px;flex-shrink:0}
+.pro h4{margin:0;font-size:16.5px}.pro .role{color:var(--brand);font-weight:700;font-size:12.5px}
+.pro .bio{color:var(--muted);font-size:13.5px;margin:0 0 12px;flex:1}
+.pro .det{font-size:13px;color:var(--ink);line-height:1.8;margin-bottom:12px;border-top:1px solid var(--line);padding-top:10px}
+.pro .det span{display:flex;gap:8px;align-items:center}
+.contact-banner{background:linear-gradient(120deg,#101a36,#21356a);color:#fff;border-radius:20px;padding:32px;text-align:center;margin-top:28px}
+.contact-banner p{color:#aeb8d4;max-width:520px;margin:8px auto 18px}
+
+/* Courses */
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:22px}
+.filt{display:flex;gap:6px;flex-wrap:wrap}
+.fbtn{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:7px 13px;font-size:13px;font-weight:650;color:var(--muted)}
+.fbtn.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+.course-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.course{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);display:flex;flex-direction:column}
+.course .prov{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.course .badge-free{background:#e6f7f1;color:#0f9a78;font-weight:800;font-size:11.5px;padding:4px 10px;border-radius:7px}
+.course .pv{font-size:12.5px;color:var(--muted);font-weight:700}
+.course h4{margin:0 0 6px;font-size:16px;line-height:1.3}
+.course p{margin:0 0 12px;color:var(--muted);font-size:13.5px;flex:1}
+.course .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.lvl{font-size:11px;font-weight:750;padding:3px 9px;border-radius:6px}
+.lvl.Beginner{background:#e6f7f1;color:#0f9a78}.lvl.Intermediate{background:#fff3e0;color:#b7791f}.lvl.Advanced{background:#fdecef;color:#c83b52}
+.fchip{font-size:11px;font-weight:700;padding:3px 9px;border-radius:6px;background:var(--soft2);color:var(--brand)}
+.course a.open{color:var(--brand);font-weight:750;font-size:13.5px}
+
+/* Pricing */
+.cur-sel{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--muted)}
+.cur-sel select{padding:8px 10px;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;font-size:13.5px;font-weight:650}
+.price-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:1180px;margin:8px auto 0}
+.plan{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:var(--shadow);position:relative;display:flex;flex-direction:column}
+.plan.pro{border:2px solid var(--brand);box-shadow:var(--shadow-lg)}
+.plan .pop{position:absolute;top:-12px;right:18px;background:var(--brand);color:#fff;font-size:11px;font-weight:800;padding:4px 11px;border-radius:999px}
+.plan .kind{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--brand);margin-bottom:6px}
+.plan h3{margin:0 0 4px;font-size:19px}.plan .desc{color:var(--muted);font-size:13px;margin:0 0 14px;min-height:34px}
+.plan .price{font-size:32px;font-weight:850;letter-spacing:-.02em;line-height:1}
+.plan .price small{font-size:15px;color:var(--muted);font-weight:600}
+.plan .yr{font-size:12.5px;color:var(--muted);margin:6px 0 18px}
+.plist{list-style:none;margin:0 0 20px;padding:0;flex:1}
+.plist li{display:flex;gap:9px;align-items:flex-start;font-size:14px;margin-bottom:9px;color:var(--ink)}
+.plist li .ck{color:var(--accent);font-weight:850;flex-shrink:0}
+.plist li.off{color:#aab2c2}.plist li.off .ck{color:#cdd3df}
+.guarantee{text-align:center;color:var(--muted);font-size:12.5px;margin-top:16px}
+
+/* Modal / quiz */
+.overlay{position:fixed;inset:0;background:rgba(10,16,30,.55);backdrop-filter:blur(4px);z-index:200;display:grid;place-items:center;padding:20px}
+.modal{background:var(--card);border-radius:22px;width:100%;max-width:560px;max-height:92vh;overflow:auto;box-shadow:var(--shadow-lg);position:relative}
+.modal-pad{padding:32px}.modal h3{margin:0 0 6px;font-size:23px}.modal .sub{color:var(--muted);margin:0 0 20px;font-size:15px}
+.x{position:absolute;top:15px;right:16px;width:34px;height:34px;border-radius:9px;background:var(--soft2);color:var(--muted);font-size:18px;display:grid;place-items:center}
+.prog{height:6px;background:var(--soft2);border-radius:99px;overflow:hidden;margin-bottom:24px}.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--brand),var(--accent));transition:.3s}
+.field{margin-bottom:16px}.field label{display:block;font-weight:700;font-size:14px;margin-bottom:7px}
+.input,select.in{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;font-size:15px;font-family:inherit;background:var(--card);color:var(--ink)}
+.input:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 4px rgba(47,76,221,.1)}
+.qtitle{font-size:20px;font-weight:780;margin:0 0 4px}.qhint{color:var(--muted);font-size:14px;margin:0 0 18px}
+.opts{display:grid;gap:11px}.opts.cols{grid-template-columns:1fr 1fr}
+.opt{border:1.5px solid var(--line);border-radius:13px;padding:14px 15px;font-weight:650;font-size:15px;transition:.15s;background:var(--card);text-align:left}
+.opt:hover{border-color:var(--brand2);background:var(--soft)}.opt.sel{border-color:var(--brand);background:var(--soft2);box-shadow:0 0 0 3px rgba(47,76,221,.12)}
+.chip-row{display:flex;flex-wrap:wrap;gap:9px}
+.chip{border:1.5px solid var(--line);border-radius:999px;padding:9px 14px;font-weight:650;font-size:14px;background:var(--card);transition:.15s}
+.chip:hover{border-color:var(--brand2)}.chip.sel{background:var(--brand);color:#fff;border-color:var(--brand)}
+.nav-row{display:flex;justify-content:space-between;gap:12px;margin-top:24px}
+
+/* Dashboard */
+.page-head h1{margin:0 0 4px;font-size:27px;letter-spacing:-.02em}.page-head p{margin:0 0 22px;color:var(--muted)}
+.tabs{display:flex;gap:6px;border-bottom:1px solid var(--line);margin-bottom:22px;flex-wrap:wrap}
+.tab{padding:11px 15px;font-weight:700;font-size:14px;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;cursor:pointer}
+.tab.on{color:var(--brand);border-color:var(--brand)}
+.dview{display:none}.dview.on{display:block;animation:fade .25s}
+.cards-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:22px}
+.stat-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+.stat-card .k{font-size:12.5px;color:var(--muted);font-weight:650}.stat-card .v{font-size:28px;font-weight:850;margin-top:4px}.stat-card .v small{font-size:13px;color:var(--muted);font-weight:600}
+.alloc{display:grid;grid-template-columns:1.1fr 1fr;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);margin-bottom:22px;border:1px solid var(--line)}
+.alloc-l{background:linear-gradient(135deg,#101a36,#21356a);color:#fff;padding:26px}
+.alloc-l .eyebrow{color:color-mix(in srgb,var(--accent),#fff 55%)}.alloc-l h2{margin:8px 0;font-size:26px;letter-spacing:-.02em;color:#fff}.alloc-l p{margin:0;color:#aeb8d4;font-size:14px;line-height:1.6}
+.alloc-l .alt{margin-top:14px;font-size:13px;color:#cdd7ff}
+.alloc-r{background:var(--card);padding:20px 24px}.alloc-r .eyebrow{margin-bottom:10px}
+.alloc-u{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}.alloc-u:last-child{border-bottom:none}
+.alloc-u b{font-weight:700}.alloc-u span{color:var(--muted);font-size:12.5px}
+.alloc-u .tag{margin-left:8px}
+@media(max-width:700px){.alloc{grid-template-columns:1fr}}
+.course.clk{cursor:pointer}.course.clk:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:var(--brand2)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:18px}
+.panel-h{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--line)}.panel-h h3{margin:0;font-size:16px}.panel-b{padding:4px 20px 14px}
+.row-item{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}.row-item:last-child{border-bottom:none}
+.uni-logo{width:46px;height:46px;border-radius:11px;display:grid;place-items:center;font-weight:850;color:#fff;font-size:16px;flex-shrink:0}
+.row-main{flex:1;min-width:0}.row-main b{font-size:15px}.row-main .meta{color:var(--muted);font-size:12.5px;display:flex;gap:9px;flex-wrap:wrap;margin-top:2px}
+.match{flex-shrink:0;text-align:right}.match .pct{font-weight:850;font-size:19px}.match .lab{font-size:10.5px;color:var(--muted);font-weight:700;text-transform:uppercase}
+.tag{display:inline-block;padding:3px 9px;border-radius:7px;font-size:11px;font-weight:750}
+.tag.reach{background:#fdecef;color:#c83b52}.tag.target{background:#fff3e0;color:#b7791f}.tag.safety{background:#e6f7f1;color:#0f9a78}
+.dl-item{display:flex;align-items:center;gap:13px;padding:12px 0;border-bottom:1px solid var(--line)}.dl-item:last-child{border-bottom:none}
+.dl-date{width:52px;text-align:center;flex-shrink:0}.dl-date b{display:block;font-size:19px;font-weight:850;line-height:1}.dl-date span{font-size:10.5px;color:var(--muted);text-transform:uppercase;font-weight:750}
+.dl-main{flex:1}.dl-main b{font-size:14.5px}.dl-main .sub{color:var(--muted);font-size:12.5px}
+.dl-left{font-size:12px;font-weight:750;padding:5px 10px;border-radius:8px;flex-shrink:0}
+.dl-left.soon{background:#fdecef;color:#c83b52}.dl-left.mid{background:#fff3e0;color:#b7791f}.dl-left.far{background:#e6f7f1;color:#0f9a78}
+.check{width:21px;height:21px;border-radius:6px;border:2px solid var(--line);flex-shrink:0;display:grid;place-items:center;color:#fff;font-size:12px;cursor:pointer}.check.done{background:var(--accent);border-color:var(--accent)}
+.seg{display:flex;gap:8px;margin-bottom:16px}.seg button{flex:1;padding:10px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);font-weight:700;font-size:13px;color:var(--muted)}.seg button.on{border-color:var(--brand);background:var(--soft2);color:var(--brand)}
+.note{font-size:12.5px;color:var(--muted)}
+
+/* Floating chat */
+.fab{position:fixed;bottom:24px;right:24px;z-index:150;width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-dark));color:#fff;font-size:25px;display:grid;place-items:center;box-shadow:0 12px 32px rgba(47,76,221,.4);transition:.2s}
+.fab:hover{transform:scale(1.06)}.fab .badge{position:absolute;top:-2px;right:-2px;background:var(--danger);color:#fff;font-size:11px;font-weight:800;width:19px;height:19px;border-radius:50%;display:grid;place-items:center;border:2px solid #fff}
+.chatdock{position:fixed;bottom:24px;right:24px;z-index:160;width:388px;max-width:calc(100vw - 32px);height:592px;max-height:calc(100vh - 48px);background:var(--card);border-radius:20px;box-shadow:var(--shadow-lg);display:flex;flex-direction:column;overflow:hidden;border:1px solid var(--line);transform:translateY(20px) scale(.98);opacity:0;pointer-events:none;transition:.2s}
+.chatdock.open{transform:none;opacity:1;pointer-events:auto}
+.cd-head{background:linear-gradient(120deg,#101a36,#21356a);color:#fff;padding:15px 17px;display:flex;align-items:center;gap:11px}
+.cd-head .av{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-dark));display:grid;place-items:center;font-size:14px;font-weight:800;letter-spacing:.5px;color:#fff}
+.cd-head b{font-size:15px;display:block}.cd-head span{font-size:11.5px;color:#9fe7c9;display:flex;align-items:center;gap:5px}.cd-head .dot{width:7px;height:7px;border-radius:50%;background:color-mix(in srgb,var(--accent),#fff 50%);display:inline-block}
+.cd-head .acts{margin-left:auto;display:flex;gap:6px}.cd-head .acts button{width:31px;height:31px;border-radius:9px;background:rgba(255,255,255,.12);color:#fff;font-size:14px;display:grid;place-items:center}.cd-head .acts button:hover{background:rgba(255,255,255,.22)}
+.cd-scroll{flex:1;overflow-y:auto;padding:15px;display:flex;flex-direction:column;gap:12px;background:var(--soft)}
+.msg{display:flex;gap:9px;max-width:88%}.msg.user{align-self:flex-end;flex-direction:row-reverse}
+.bubble{padding:11px 14px;border-radius:15px;font-size:14.5px;line-height:1.5}
+.msg.bot .bubble{background:var(--card);border:1px solid var(--line);border-bottom-left-radius:5px}.msg.user .bubble{background:var(--brand);color:#fff;border-bottom-right-radius:5px}
+.msg .av{width:29px;height:29px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;font-size:11px;font-weight:800;letter-spacing:.3px;color:#fff}.msg.bot .av{background:linear-gradient(135deg,var(--accent),var(--accent-dark))}.msg.user .av{background:#39435e}
+.bubble p{margin:0 0 7px}.bubble p:last-child{margin:0}.bubble ul{margin:5px 0;padding-left:18px}.bubble li{margin:2px 0}.bubble a{color:var(--brand);font-weight:700;text-decoration:underline}
+.cd-suggest{padding:0 14px 10px;display:flex;gap:7px;flex-wrap:wrap;background:var(--soft)}
+.sugg{background:var(--card);color:var(--brand);border:1px solid var(--line);padding:7px 12px;border-radius:999px;font-size:12.5px;font-weight:650}.sugg:hover{background:var(--soft2)}
+.cd-input{display:flex;gap:9px;align-items:flex-end;padding:12px 14px;border-top:1px solid var(--line);background:var(--card)}
+.cd-input textarea{flex:1;resize:none;border:1.5px solid var(--line);border-radius:13px;padding:11px 13px;font-family:inherit;font-size:14.5px;max-height:120px;line-height:1.4}.cd-input textarea:focus{outline:none;border-color:var(--brand)}
+.send{width:42px;height:42px;border-radius:12px;background:var(--brand);color:#fff;font-size:17px;flex-shrink:0;display:grid;place-items:center}.send:disabled{opacity:.5}
+.typing{display:flex;gap:4px;padding:3px 2px}.typing i{width:7px;height:7px;border-radius:50%;background:var(--muted);animation:bounce 1.2s infinite}.typing i:nth-child(2){animation-delay:.2s}.typing i:nth-child(3){animation-delay:.4s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-5px);opacity:1}}
+.banner{background:#fff8ec;border-bottom:1px solid #f5deb0;color:#8a6118;padding:9px 14px;font-size:12.5px;display:flex;gap:8px;align-items:center}.banner a{color:var(--brand);font-weight:750;text-decoration:underline;cursor:pointer}
+
+@media(max-width:900px){
+  .launch,.grid-3,.cards-3,.team,.pro-grid,.course-grid{grid-template-columns:1fr 1fr}
+  .launch{margin-top:24px}
+  .price-grid{grid-template-columns:1fr 1fr}
+  .hero h1{font-size:36px}h2.h{font-size:26px}
+  .nav-links{position:fixed;top:58px;left:0;right:0;background:var(--card);flex-direction:column;align-items:stretch;padding:12px;gap:5px;border-bottom:1px solid var(--line);box-shadow:var(--shadow);display:none}
+  .nav-links.open{display:flex}.nav-links a.link{padding:12px}.hamb{display:grid}
+  .about-block{grid-template-columns:1fr;gap:8px}
+}
+@media(max-width:560px){.launch,.grid-3,.cards-3,.team,.pro-grid,.course-grid,.grid-2,.opts.cols,.price-grid{grid-template-columns:1fr}.hero h1{font-size:30px}.wrap{padding:36px 20px}}
+</style>
+</head>
+<body>
+
+<noscript><div style="background:#fff8ec;color:#8a6118;padding:14px;text-align:center;font-family:sans-serif;font-size:14px">GradGuide needs JavaScript enabled to run. Please turn on JavaScript in your browser settings to use the site.</div></noscript>
+<nav class="nav">
+  <div class="brand" onclick="goPage('home')"><div class="logo">G</div> GradGuide</div>
+  <div class="nav-right">
+    <div class="nav-links" id="navLinks">
+      <a class="link on" data-pg="home" onclick="goPage('home')">Home</a>
+      <a class="link" data-pg="explore" onclick="goPage('explore')">My Matches</a>
+      <a class="link" data-pg="courses" onclick="goPage('courses')">Free Courses</a>
+      <a class="link" data-pg="pricing" onclick="goPage('pricing')">Pricing</a>
+      <a class="link" data-pg="about" onclick="goPage('about')">About</a>
+      <a class="link" data-pg="contacts" onclick="goPage('contacts')">Contacts</a>
+      <a class="link" onclick="toggleChat(true)">Counsellor</a>
+      <button class="btn btn-primary" id="ctaBtn" onclick="startQuiz()">Get started</button>
+    </div>
+    <button class="accent-btn" id="accentBtn" onclick="toggleAccentPop(event)" aria-label="Choose accent colour" title="Accent colour"><span class="dot"></span></button>
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark"></button>
+    <div class="hamb" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</div>
+    <div class="accent-pop hidden" id="accentPop"></div>
+  </div>
+</nav>
+
+<!-- ============ HOME ============ -->
+<div class="page active" id="page-home">
+  <header class="hero">
+    <div class="glow a"></div><div class="glow b"></div>
+    <div class="hero-inner">
+      <div class="pill">Built for students, by people who have been there</div>
+      <h1>Your college journey,<br><span>made clear and personal.</span></h1>
+      <p>Universities, scholarships, free courses and deadlines — organised around your goals, with a guidance counsellor on hand whenever you need one.</p>
+      <div class="hero-cta">
+        <button class="btn btn-primary btn-lg" onclick="startQuiz()">Build my profile</button>
+        <button class="btn btn-ghost btn-lg" style="color:#fff;border-color:rgba(255,255,255,.25)" onclick="goPage('pricing')">See plans</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- transport launcher: click a card, jump straight there -->
+  <div class="launch">
+    <div class="lcard" tabindex="0" role="button" onclick="goPage('explore')" onkeypress="if(event.key==='Enter')goPage('explore')"><div class="ic" style="background:var(--soft2);color:var(--ink)"><svg viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1 2.7 3 6 3s6-2 6-3v-5"/></svg></div><b>My Matches</b><p>Universities and scholarships picked for your profile.</p><span class="go">Open →</span></div>
+    <div class="lcard" tabindex="0" role="button" onclick="goPage('courses')" onkeypress="if(event.key==='Enter')goPage('courses')"><div class="ic" style="background:var(--soft2);color:var(--ink)"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><b>Free Courses</b><p>Hand-picked free courses to build your profile.</p><span class="go">Browse →</span></div>
+    <div class="lcard" tabindex="0" role="button" onclick="goPage('pricing')" onkeypress="if(event.key==='Enter')goPage('pricing')"><div class="ic" style="background:var(--soft2);color:var(--ink)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.1 8.3 22 9.3 17 14.1 18.2 21 12 17.8 5.8 21 7 14.1 2 9.3 8.9 8.3 12 2"/></svg></div><b>Plans</b><p>Stay free, or upgrade for deeper support.</p><span class="go">Compare →</span></div>
+    <div class="lcard" tabindex="0" role="button" onclick="toggleChat(true)" onkeypress="if(event.key==='Enter')toggleChat(true)"><div class="ic" style="background:var(--soft2);color:var(--ink)"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5z"/></svg></div><b>Counsellor</b><p>Ask a question and get a clear, personal answer.</p><span class="go">Chat →</span></div>
+  </div>
+
+  <div class="wrap" style="padding-bottom:34px">
+    <div class="grid grid-3">
+      <div class="card feature clk" tabindex="0" role="button" onclick="startQuiz()" onkeypress="if(event.key==='Enter')startQuiz()"><div class="fi" style="background:var(--soft2);color:var(--ink)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4"/></svg></div><h3>One profile, everything tailored</h3><p>A short quiz captures your interests, level and goals — then matches, courses and advice all line up with you.</p><span class="go" style="color:var(--brand);font-weight:750;font-size:13px">Start the quiz →</span></div>
+      <div class="card feature clk" tabindex="0" role="button" onclick="goPage('explore')" onkeypress="if(event.key==='Enter')goPage('explore')"><div class="fi" style="background:var(--soft2);color:var(--ink)"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></div><h3>Everything in one place</h3><p>No more juggling twenty tabs. Schools, scholarships, courses and deadlines live together in one tidy dashboard.</p><span class="go" style="color:var(--brand);font-weight:750;font-size:13px">Open dashboard →</span></div>
+      <div class="card feature clk" tabindex="0" role="button" onclick="toggleChat(true)" onkeypress="if(event.key==='Enter')toggleChat(true)"><div class="fi" style="background:var(--soft2);color:var(--ink)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.2 7.8 14.1 14.1 7.8 16.2 9.9 9.9"/></svg></div><h3>Guidance, on your schedule</h3><p>A counsellor that remembers your goals and answers clearly — without the long wait for an appointment.</p><span class="go" style="color:var(--brand);font-weight:750;font-size:13px">Ask a question →</span></div>
+    </div>
+  </div>
+  <footer>© 2026 GradGuide · A student-first college guidance platform</footer>
+</div>
+
+<!-- ============ EXPLORE ============ -->
+<div class="page" id="page-explore">
+  <div class="wrap">
+    <div id="exploreLocked">
+      <div class="page-head"><h1>Your matches</h1><p>Build your profile to unlock universities, scholarships, courses and deadlines chosen for you.</p></div>
+      <div class="band center"><h2>See schools matched to you</h2><p>Take the two-minute profile quiz and your dashboard fills with reach, target and safety schools, scholarships you qualify for, and a deadline tracker.</p><button class="btn btn-primary btn-lg" onclick="startQuiz()">Build my profile</button></div>
+    </div>
+    <div id="exploreApp" class="hidden">
+      <div class="page-head"><h1 id="dashHi">Welcome back</h1><p>Where you stand on your college journey.</p></div>
+      <div class="tabs">
+        <div class="tab on" data-d="overview" onclick="dtab('overview')">Overview</div>
+        <div class="tab" data-d="schools" onclick="dtab('schools')">Universities</div>
+        <div class="tab" data-d="scholarships" onclick="dtab('scholarships')">Scholarships</div>
+        <div class="tab" data-d="courses" onclick="dtab('courses')">Recommended courses</div>
+        <div class="tab" data-d="deadlines" onclick="dtab('deadlines')">Deadlines</div>
+        <div class="tab" data-d="settings" onclick="dtab('settings')">Counsellor settings</div>
+      </div>
+      <div class="dview on" id="d-overview">
+        <div id="allocBox"></div>
+        <div class="cards-3">
+          <div class="stat-card"><div class="k">Profile match strength</div><div class="v" id="sMatch">—</div></div>
+          <div class="stat-card"><div class="k">Recommended courses</div><div class="v" id="sCourses">—</div></div>
+          <div class="stat-card"><div class="k">Next deadline</div><div class="v" id="sNext">—</div></div>
+        </div>
+        <div class="panel"><div class="panel-h"><h3>Top university matches</h3><a class="btn btn-soft" onclick="dtab('schools')">View all</a></div><div class="panel-b" id="dashSchools"></div></div>
+        <div class="grid grid-2">
+          <div class="panel" style="margin:0"><div class="panel-h"><h3>Free courses for you</h3><a class="btn btn-soft" onclick="dtab('courses')">All</a></div><div class="panel-b" id="dashCourses"></div></div>
+          <div class="panel" style="margin:0"><div class="panel-h"><h3>Upcoming deadlines</h3><a class="btn btn-soft" onclick="dtab('deadlines')">All</a></div><div class="panel-b" id="dashDeadlines"></div></div>
+        </div>
+      </div>
+      <div class="dview" id="d-schools"><div class="panel"><div class="panel-h"><h3>University matches</h3></div><div class="panel-b" id="allSchools"></div></div></div>
+      <div class="dview" id="d-scholarships"><div class="panel"><div class="panel-h"><h3>Scholarship matches</h3></div><div class="panel-b" id="allScholarships"></div></div></div>
+      <div class="dview" id="d-coursesreco"><div class="panel"><div class="panel-h"><h3>Courses recommended for you</h3><a class="btn btn-soft" onclick="goPage('courses')">Browse all</a></div><div class="panel-b" id="recoCourses"></div></div></div>
+      <div class="dview" id="d-deadlines"><div class="panel"><div class="panel-h"><h3>Deadline tracker</h3></div><div class="panel-b" id="allDeadlines"></div></div></div>
+      <div class="dview" id="d-settings">
+        <div class="panel"><div class="panel-h"><h3>Counsellor settings</h3></div><div class="panel-b" style="padding-bottom:20px">
+          <p class="note" style="margin:8px 0 16px">The counsellor works out of the box. To enable richer, live answers, connect an AI model below. Your key is stored only in this browser and sent directly to the provider.</p>
+          <div class="field"><label>Provider</label><div class="seg" id="provSeg"><button data-p="anthropic" class="on" onclick="setProv('anthropic')">Anthropic (Claude)</button><button data-p="openai" onclick="setProv('openai')">OpenAI</button></div></div>
+          <div class="field"><label>API key</label><input class="input" id="apiKey" type="password" placeholder="sk-..."><p class="note" id="keyNote" style="margin-top:7px">Get a key at console.anthropic.com → API Keys.</p></div>
+          <div class="field"><label>Model</label><input class="input" id="model" placeholder="claude-haiku-4-5-20251001"></div>
+          <button class="btn btn-primary" onclick="saveSettings()">Save settings</button>
+        </div></div>
+      </div>
+    </div>
+  </div>
+  <footer>© 2026 GradGuide</footer>
+</div>
+
+<!-- ============ COURSES ============ -->
+<div class="page" id="page-courses">
+  <div class="wrap">
+    <div class="page-head"><h1>Free courses</h1><p>Hand-picked, genuinely free courses from trusted providers. Build skills, explore a field, and strengthen your applications — at no cost.</p></div>
+    <div class="toolbar">
+      <div class="filt" id="fieldFilt"></div>
+      <div style="flex:1"></div>
+      <div class="filt" id="levelFilt"></div>
+    </div>
+    <div class="course-grid" id="courseGrid"></div>
+    <div class="band center" style="margin-top:28px"><div class="eyebrow" style="color:color-mix(in srgb,var(--accent),#fff 55%)">Not sure where to start?</div><h2>Let the counsellor pick for you</h2><p>It will suggest courses based on your interests, goals and where you are academically.</p><button class="btn btn-primary btn-lg" onclick="recommendCoursesInChat()">Recommend courses for me</button></div>
+  </div>
+  <footer>© 2026 GradGuide · Course links go to the official free providers</footer>
+</div>
+
+<!-- ============ PRICING ============ -->
+<div class="page" id="page-pricing">
+  <div class="wrap">
+    <div class="center"><div class="eyebrow">Pricing</div><h2 class="h">Start free. Add a license when you want more.</h2><p class="lead">Every student gets the essentials free. Paid licenses unlock a more personalised experience and premium features — choose the one that fits where you are.</p></div>
+    <div class="center" style="margin:20px 0 6px"><div class="cur-sel">Showing prices in
+      <select id="curSel" onchange="setCurrency(this.value)"></select>
+      <span id="curGuess" class="note"></span></div></div>
+    <div class="price-grid">
+      <div class="plan">
+        <h3>Free</h3><p class="desc">Everything you need to get organised and explore.</p>
+        <div class="price" id="freePrice">—<small> /mo</small></div><div class="yr">No card required</div>
+        <ul class="plist">
+          <li><span class="ck">✓</span> Profile quiz &amp; personalised matches</li>
+          <li><span class="ck">✓</span> University &amp; scholarship recommendations</li>
+          <li><span class="ck">✓</span> Free course recommendations</li>
+          <li><span class="ck">✓</span> Public deadline calendar</li>
+          <li><span class="ck">✓</span> Counsellor chat (up to 15 messages/day)</li>
+          <li class="off"><span class="ck">✓</span> Essay reviews</li>
+          <li class="off"><span class="ck">✓</span> 1:1 specialist sessions</li>
+          <li class="off"><span class="ck">✓</span> Deadline reminders &amp; alerts</li>
+        </ul>
+        <button class="btn btn-ghost btn-block" onclick="startQuiz()">Get started free</button>
+      </div>
+      <div class="plan pro">
+        <div class="pop">Most popular</div>
+        <div class="kind">License · High school</div>
+        <h3>Student License</h3><p class="desc">A fully personalised experience for high-school students applying to university.</p>
+        <div class="price" id="proPrice">—<small> /mo</small></div><div class="yr" id="proYr"></div>
+        <ul class="plist">
+          <li><span class="ck">✓</span> <b>Everything in Free</b></li>
+          <li><span class="ck">✓</span> Unlimited counsellor conversations</li>
+          <li><span class="ck">✓</span> Personalised essay &amp; statement reviews</li>
+          <li><span class="ck">✓</span> One 1:1 specialist session every month</li>
+          <li><span class="ck">✓</span> Smart deadline reminders &amp; alerts</li>
+          <li><span class="ck">✓</span> Full scholarship database &amp; auto-matching</li>
+          <li><span class="ck">✓</span> Application progress tracker</li>
+          <li><span class="ck">✓</span> Curriculum-aware advice (IB, A-Levels, AP)</li>
+        </ul>
+        <button class="btn btn-primary btn-block" onclick="choosePro()">Get Student License</button>
+      </div>
+      <div class="plan">
+        <div class="pop" style="background:var(--accent-dark)">University</div>
+        <div class="kind">License · Undergraduate</div>
+        <h3>University Student License</h3><p class="desc">For students already at university who want premium, ongoing support.</p>
+        <div class="price" id="uniPrice">—<small> /mo</small></div><div class="yr" id="uniYr"></div>
+        <ul class="plist">
+          <li><span class="ck">✓</span> <b>Everything in Student License</b></li>
+          <li><span class="ck">✓</span> Module &amp; major/minor selection guidance</li>
+          <li><span class="ck">✓</span> Internship &amp; placement matching</li>
+          <li><span class="ck">✓</span> Resume / CV &amp; LinkedIn reviews</li>
+          <li><span class="ck">✓</span> Exchange &amp; study-abroad planning</li>
+          <li><span class="ck">✓</span> Research &amp; graduate-funding finder</li>
+          <li><span class="ck">✓</span> Two 1:1 specialist sessions every month</li>
+          <li><span class="ck">✓</span> Career planning &amp; networking tools</li>
+        </ul>
+        <button class="btn btn-primary btn-block" onclick="chooseUni()">Get University License</button>
+      </div>
+      <div class="plan">
+        <div class="pop" style="background:var(--accent)">Graduates</div>
+        <h3>Alumni</h3><p class="desc">Finished college? Keep the momentum into your career.</p>
+        <div class="price" id="gradPrice">—<small> /mo</small></div><div class="yr" id="gradYr"></div>
+        <ul class="plist">
+          <li><span class="ck">✓</span> Career &amp; job-search guidance from the counsellor</li>
+          <li><span class="ck">✓</span> Resume / CV &amp; cover-letter reviews</li>
+          <li><span class="ck">✓</span> Internship &amp; entry-level job matching</li>
+          <li><span class="ck">✓</span> Graduate school (Master’s / PhD) application support</li>
+          <li><span class="ck">✓</span> Interview prep &amp; mock interviews</li>
+          <li><span class="ck">✓</span> Salary &amp; offer negotiation coaching</li>
+          <li><span class="ck">✓</span> LinkedIn profile optimisation</li>
+          <li><span class="ck">✓</span> Alumni networking &amp; mentor connections</li>
+        </ul>
+        <button class="btn btn-ghost btn-block" onclick="chooseGrad()">Choose Alumni</button>
+      </div>
+    </div>
+    <div class="center" style="max-width:640px;margin:22px auto 0">
+      <p style="font-size:13.5px;color:var(--ink);background:var(--soft2);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin:0">
+        <b>How licenses work:</b> pay a one-time fee to unlock your license, then a monthly subscription keeps it active and unlocks the premium features. Cancel the subscription anytime — your one-time fee is what activated the license.</p>
+      <p class="guarantee" style="margin-top:12px">Prices shown in your local currency · Student discounts available on request</p>
+    </div>
+  </div>
+  <footer>© 2026 GradGuide</footer>
+</div>
+
+<!-- ============ ABOUT ============ -->
+<div class="page" id="page-about">
+  <div class="wrap">
+    <div class="center"><div class="eyebrow">About us</div><h2 class="h">Guidance every student deserves</h2><p class="lead">We are students and educators who lived the chaos of college applications — and built the tool we wish we’d had.</p></div>
+
+    <div class="astat">
+      <div><b>1,200+</b><span>Universities tracked</span></div>
+      <div><b>8,000+</b><span>Scholarships indexed</span></div>
+      <div><b>20</b><span>Free courses curated</span></div>
+      <div><b>24/7</b><span>Guidance on hand</span></div>
+    </div>
+
+    <div class="about-block"><div class="ttl"><span class="em"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>Why we built this</div><p>High school students often face difficulties during the college counselling and application process due to the overwhelming amount of information available online, differing admission requirements across universities, and limited access to personalised guidance. Many students spend hours researching universities, scholarships, deadlines, and application requirements across multiple websites, which can be confusing and time-consuming. School counsellors are often responsible for supporting a large number of students, making it difficult to provide individualised advice to everyone. As a result, students may miss important deadlines, overlook suitable opportunities, or make decisions without fully understanding their options.</p></div>
+    <div class="about-block"><div class="ttl"><span class="em"><svg viewBox="0 0 24 24"><line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1V18h6v-1.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2z"/></svg></span>What we believe</div><p>Every student deserves guidance that fits who they are — their interests, their academic level, and their goals — not a one-size-fits-all experience. We believe the right information, surfaced at the right moment, turns a stressful, isolating process into a clear and confident one. Good guidance should give every student the kind of attention a great counsellor would, without the limits of time or caseload.</p></div>
+
+    <div class="center" style="margin:38px 0 16px"><div class="eyebrow">What we stand for</div></div>
+    <div class="grid grid-3 values">
+      <div class="card"><div class="fi" style="background:var(--soft2);color:var(--ink)"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><h4>Personal by default</h4><p>Advice is shaped by each student’s profile — never a generic checklist.</p></div>
+      <div class="card"><div class="fi" style="background:var(--soft2);color:var(--ink)"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></div><h4>Everything in one place</h4><p>Schools, scholarships, courses and deadlines together, so nothing slips.</p></div>
+      <div class="card"><div class="fi" style="background:var(--soft2);color:var(--ink)"><svg viewBox="0 0 24 24"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L2 12V2h10l8.6 8.6a2 2 0 0 1 0 2.8z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></div><h4>Free where it matters</h4><p>The essentials stay free; we only charge for deeper, human support.</p></div>
+    </div>
+
+    <div class="mission-box"><div class="eyebrow">Our mission</div><p>To build a college guidance platform that centralises application information, provides personalised university and scholarship recommendations, tracks deadlines, and offers step-by-step guidance throughout the application journey — helping students make more informed decisions while reducing stress and improving access to college counselling resources.</p></div>
+
+    <div class="center" style="margin:42px 0 16px"><div class="eyebrow">The team</div><h2 class="h" style="font-size:25px">Founding team</h2><p class="note" style="max-width:480px;margin:8px auto 0">Placeholder cards — send your team’s names and roles and I’ll drop them in.</p></div>
+    <div class="team">
+      <div class="tcard"><div class="tavatar" style="background:linear-gradient(135deg,var(--accent),var(--accent-dark))">F</div><b>Your Name</b><div class="role">Founder &amp; Product</div><p>Shapes the student experience and decides what GradGuide does next.</p></div>
+      <div class="tcard"><div class="tavatar" style="background:linear-gradient(135deg,var(--accent),var(--accent-dark))">C</div><b>Teammate</b><div class="role">Guidance Lead</div><p>Brings real admissions knowledge so the advice students get is sound.</p></div>
+      <div class="tcard"><div class="tavatar" style="background:linear-gradient(135deg,var(--accent),var(--accent-dark))">E</div><b>Teammate</b><div class="role">Engineering Lead</div><p>Builds the platform and the tools that power it.</p></div>
+    </div>
+  </div>
+  <footer>© 2026 GradGuide</footer>
+</div>
+
+<!-- ============ CONTACTS ============ -->
+<div class="page" id="page-contacts">
+  <div class="wrap">
+    <div class="center"><div class="eyebrow">Contacts</div><h2 class="h">Talk to a human specialist</h2><p class="lead">Prefer a real conversation? Book time with one of our advisers. Not sure who you need? The counsellor can point you to the right person.</p></div>
+    <div class="pro-grid" id="proGrid" style="margin-top:26px"></div>
+    <div class="contact-banner"><div class="eyebrow" style="color:color-mix(in srgb,var(--accent),#fff 55%)">Not sure who to contact?</div><h2 style="font-size:23px;margin:8px 0 0">Let the counsellor guide you</h2><p>Describe what you’re stuck on and we’ll suggest the right specialist — or answer your question on the spot.</p><button class="btn btn-primary btn-lg" onclick="toggleChat(true)">Ask the counsellor</button></div>
+  </div>
+  <footer>© 2026 GradGuide</footer>
+</div>
+
+<!-- ============ QUIZ MODAL ============ -->
+<div class="overlay hidden" id="authOverlay"><div class="modal"><button class="x" onclick="closeAuth()">×</button><div class="modal-pad" id="authBody"></div></div></div>
+
+<!-- ============ FLOATING CHAT ============ -->
+<button class="fab" id="fab" onclick="toggleChat(true)" aria-label="Open counsellor">
+  <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+  <span class="badge" id="fabBadge">1</span></button>
+<div class="chatdock" id="chatdock">
+  <div class="cd-head"><div class="av">GG</div><div><b>GradGuide Counsellor</b><span><i class="dot"></i> Online · personalised to you</span></div>
+    <div class="acts">
+      <button title="Settings" aria-label="Settings" onclick="goPage('explore');dtab('settings')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V15z"/></svg></button>
+      <button title="Reset conversation" aria-label="Reset" onclick="resetChat()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
+      <button title="Close" aria-label="Close" onclick="toggleChat(false)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+    </div></div>
+  <div class="banner hidden" id="aiBanner">Demo mode — replies are scripted. <a onclick="goPage('explore');dtab('settings')">Connect a model</a> for live answers.</div>
+  <div class="cd-scroll" id="chatScroll"></div>
+  <div class="cd-suggest" id="chatSuggest"></div>
+  <div class="cd-input"><textarea id="chatBox" rows="1" placeholder="Ask anything…" onkeydown="chatKey(event)" oninput="autresize(this)"></textarea><button class="send" id="sendBtn" onclick="sendChat()">↑</button></div>
+</div>
+
+<script>
+/* ===================== STATE ===================== */
+const LS='compass_v3';
+let state = load() || { profile:null, settings:{provider:'anthropic',key:'',model:''}, chat:[], doneDeadlines:[], currency:null };
+function load(){try{return JSON.parse(localStorage.getItem(LS))}catch(e){return null}}
+function save(){try{localStorage.setItem(LS,JSON.stringify(state))}catch(e){}}
+const ICON_SUN=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>`;
+const ICON_MOON=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+function applyTheme(th){state.theme=th;save();document.documentElement.setAttribute('data-theme',th);const b=document.getElementById('themeBtn');if(b)b.innerHTML=(th==='dark'?ICON_SUN:ICON_MOON);}
+function toggleTheme(){applyTheme(state.theme==='dark'?'light':'dark')}
+const ACCENTS=['#4f46e5','#2563eb','#0ea5e9','#0d9488','#059669','#7c3aed','#db2777','#e11d48','#ea580c','#d97706','#475569','#111827'];
+function applyAccent(hex){if(hex)document.documentElement.style.setProperty('--accent',hex)}
+function setAccent(hex){state.accent=hex;save();applyAccent(hex);const d=document.querySelector('.accent-btn .dot');if(d)d.style.background=hex;renderAccentPop()}
+function renderAccentPop(){const cur=(state.accent||'#4f46e5').toLowerCase();
+  document.getElementById('accentPop').innerHTML=`<h5>Accent colour</h5><div class="sw-grid">${ACCENTS.map(c=>`<div class="sw ${c.toLowerCase()===cur?'on':''}" style="background:${c}" title="${c}" onclick="setAccent('${c}')"></div>`).join('')}</div><div class="accent-custom"><span>Custom colour</span><input type="color" value="${cur}" oninput="setAccent(this.value)"></div>`;}
+function toggleAccentPop(e){if(e)e.stopPropagation();const p=document.getElementById('accentPop');renderAccentPop();p.classList.toggle('hidden')}
+document.addEventListener('click',e=>{const p=document.getElementById('accentPop');if(p&&!p.classList.contains('hidden')&&!e.target.closest('#accentPop')&&!e.target.closest('#accentBtn'))p.classList.add('hidden')});
+
+/* ===================== DATA ===================== */
+const INTERESTS=[['Engineering','⚙️'],['Computer Science','💻'],['Business','📈'],['Medicine / Health','🩺'],['Arts & Design','🎨'],['Law & Politics','⚖️'],['Sciences','🔬'],['Humanities','📚'],['Education','✏️'],['Environment','🌱']];
+const SCHOOLS=[
+  {n:'Harvard University',c:'#a51c30',tier:'reach',fields:['Law & Politics','Medicine / Health','Business','Humanities','Sciences'],sat:'1500-1580',rate:'3%',loc:'Cambridge, USA',cost:'$84k/yr'},
+  {n:'Stanford University',c:'#8c1515',tier:'reach',fields:['Computer Science','Engineering','Business','Sciences'],sat:'1500-1570',rate:'4%',loc:'California, USA',cost:'$82k/yr'},
+  {n:'Massachusetts Institute of Technology',c:'#a31f34',tier:'reach',fields:['Engineering','Computer Science','Sciences','Business'],sat:'1510-1580',rate:'4%',loc:'Massachusetts, USA',cost:'$79k/yr'},
+  {n:'Princeton University',c:'#ee7f2d',tier:'reach',fields:['Sciences','Humanities','Engineering','Law & Politics'],sat:'1500-1580',rate:'4%',loc:'New Jersey, USA',cost:'$79k/yr'},
+  {n:'California Institute of Technology',c:'#ff6c0c',tier:'reach',fields:['Sciences','Engineering','Computer Science'],sat:'1530-1580',rate:'3%',loc:'California, USA',cost:'$80k/yr'},
+  {n:'Yale University',c:'#00356b',tier:'reach',fields:['Law & Politics','Humanities','Arts & Design','Medicine / Health'],sat:'1500-1580',rate:'5%',loc:'Connecticut, USA',cost:'$83k/yr'},
+  {n:'University of Oxford',c:'#002147',tier:'reach',fields:['Humanities','Law & Politics','Medicine / Health','Sciences'],sat:'A*AA',rate:'17%',loc:'Oxford, UK',cost:'£33k/yr'},
+  {n:'University of Cambridge',c:'#a3c1ad',tier:'reach',fields:['Sciences','Engineering','Humanities','Medicine / Health'],sat:'A*AA',rate:'21%',loc:'Cambridge, UK',cost:'£33k/yr'},
+  {n:'Columbia University',c:'#9bcbeb',tier:'reach',fields:['Business','Law & Politics','Humanities','Engineering'],sat:'1510-1560',rate:'4%',loc:'New York, USA',cost:'$85k/yr'},
+  {n:'University of Chicago',c:'#800000',tier:'reach',fields:['Business','Sciences','Humanities','Law & Politics'],sat:'1510-1560',rate:'5%',loc:'Illinois, USA',cost:'$84k/yr'},
+  {n:'University of Pennsylvania',c:'#011f5b',tier:'reach',fields:['Business','Medicine / Health','Engineering','Law & Politics'],sat:'1490-1560',rate:'6%',loc:'Pennsylvania, USA',cost:'$84k/yr'},
+  {n:'Cornell University',c:'#b31b1b',tier:'reach',fields:['Engineering','Business','Sciences','Environment','Humanities'],sat:'1470-1550',rate:'7%',loc:'New York, USA',cost:'$84k/yr'},
+  {n:'Carnegie Mellon University',c:'#c41230',tier:'reach',fields:['Computer Science','Engineering','Arts & Design','Business'],sat:'1500-1560',rate:'11%',loc:'Pennsylvania, USA',cost:'$79k/yr'},
+  {n:'Imperial College London',c:'#003e74',tier:'reach',fields:['Engineering','Computer Science','Sciences','Medicine / Health'],sat:'A*A*A',rate:'11%',loc:'London, UK',cost:'£38k/yr'},
+  {n:'London School of Economics',c:'#e63329',tier:'reach',fields:['Business','Law & Politics','Humanities'],sat:'A*AA',rate:'9%',loc:'London, UK',cost:'£26k/yr'},
+  {n:'ETH Zurich',c:'#215cAF',tier:'target',fields:['Engineering','Computer Science','Sciences','Environment'],sat:'—',rate:'27%',loc:'Zurich, Switzerland',cost:'CHF 1.6k/yr'},
+  {n:'University College London',c:'#500778',tier:'target',fields:['Humanities','Sciences','Law & Politics','Medicine / Health','Engineering'],sat:'AAA',rate:'30%',loc:'London, UK',cost:'£28k/yr'},
+  {n:'National University of Singapore',c:'#003d7c',tier:'target',fields:['Engineering','Computer Science','Business','Sciences','Medicine / Health'],sat:'—',rate:'—',loc:'Singapore',cost:'S$38k/yr'},
+  {n:'Nanyang Technological University',c:'#0d5eaf',tier:'target',fields:['Engineering','Computer Science','Business','Sciences'],sat:'—',rate:'—',loc:'Singapore',cost:'S$36k/yr'},
+  {n:'University of Toronto',c:'#002a5c',tier:'target',fields:['Computer Science','Sciences','Business','Medicine / Health'],sat:'—',rate:'43%',loc:'Ontario, Canada',cost:'C$60k/yr'},
+  {n:'University of California, Berkeley',c:'#003262',tier:'target',fields:['Engineering','Computer Science','Business','Sciences','Environment'],sat:'1330-1530',rate:'11%',loc:'California, USA',cost:'$66k/yr'},
+  {n:'University of California, Los Angeles',c:'#2774ae',tier:'target',fields:['Arts & Design','Business','Sciences','Medicine / Health'],sat:'1300-1530',rate:'9%',loc:'California, USA',cost:'$65k/yr'},
+  {n:'University of Michigan',c:'#00274c',tier:'target',fields:['Engineering','Business','Medicine / Health','Education'],sat:'1350-1530',rate:'18%',loc:'Michigan, USA',cost:'$58k/yr'},
+  {n:'Georgia Institute of Technology',c:'#b3a369',tier:'target',fields:['Engineering','Computer Science','Sciences'],sat:'1370-1540',rate:'16%',loc:'Georgia, USA',cost:'$53k/yr'},
+  {n:'University of Melbourne',c:'#000f46',tier:'target',fields:['Business','Law & Politics','Medicine / Health','Sciences','Education'],sat:'—',rate:'—',loc:'Melbourne, Australia',cost:'A$45k/yr'},
+  {n:'New York University',c:'#57068c',tier:'target',fields:['Business','Arts & Design','Law & Politics','Humanities'],sat:'1370-1510',rate:'12%',loc:'New York, USA',cost:'$84k/yr'},
+  {n:'Arizona State University',c:'#8c1d40',tier:'safety',fields:['Business','Engineering','Arts & Design','Education','Environment'],sat:'1120-1380',rate:'88%',loc:'Arizona, USA',cost:'$33k/yr'},
+  {n:'Pennsylvania State University',c:'#1e407c',tier:'safety',fields:['Business','Engineering','Sciences','Humanities','Education'],sat:'1160-1360',rate:'55%',loc:'Pennsylvania, USA',cost:'$39k/yr'},
+];
+const SCHOLARSHIPS=[
+  {n:'Coca-Cola Scholars Program',amt:'$20,000',fields:['*'],crit:'Leadership & community impact, GPA 3.0+',due:'Oct 31'},
+  {n:'Gates Scholarship',amt:'Full ride',fields:['*'],crit:'High-achieving, Pell-eligible students',due:'Sep 15'},
+  {n:'Society of Women Engineers',amt:'$15,000',fields:['Engineering','Computer Science'],crit:'Women in engineering/CS, GPA 3.0+',due:'Feb 15'},
+  {n:'Jack Kent Cooke Award',amt:'$55,000/yr',fields:['*'],crit:'High financial need + strong academics',due:'Nov 18'},
+  {n:'DAAD Scholarship (Germany)',amt:'€12,000',fields:['Engineering','Sciences','Humanities'],crit:'Study in Germany, strong record',due:'Dec 1'},
+  {n:'Tech Futures Grant',amt:'$10,000',fields:['Computer Science','Engineering'],crit:'CS/Eng majors with a project portfolio',due:'Mar 1'},
+  {n:'National Merit Scholarship',amt:'$2,500+',fields:['*'],crit:'Top PSAT/NMSQT scorers',due:'Varies'},
+  {n:'Future Business Leaders Grant',amt:'$8,000',fields:['Business'],crit:'Business-focused students with leadership roles',due:'Jan 20'},
+];
+const DEADLINES=[
+  {t:'Common App opens',s:'Start your main application',d:'2026-08-01'},
+  {t:'Gates Scholarship',s:'Scholarship application',d:'2026-09-15'},
+  {t:'Early Action — Stanford',s:'Restrictive Early Action',d:'2026-11-01'},
+  {t:'Coca-Cola Scholars',s:'Scholarship application',d:'2026-10-31'},
+  {t:'UC Application window',s:'University of California system',d:'2026-11-30'},
+  {t:'FAFSA priority filing',s:'Financial aid form',d:'2026-12-01'},
+  {t:'Regular Decision — most schools',s:'Main application deadline',d:'2027-01-01'},
+];
+const PROS=[
+  {n:'Dr. Amara Okafor',role:'Admissions Consultant',ic:'🎓',c:'#2f4cdd',bio:'15 years guiding students into competitive universities — strategy, school lists and positioning.',email:'amara@gradguide.org',phone:'+1 (555) 014-2230'},
+  {n:'James Whitfield',role:'Scholarship Adviser',ic:'💰',c:'#b7791f',bio:'Helps students find and win funding; specialises in essays and merit/need strategy.',email:'james@gradguide.org',phone:'+1 (555) 014-8841'},
+  {n:'Priya Nair',role:'UK / US Specialist',ic:'🌍',c:'#0f9a78',bio:'Navigates both UCAS and the Common App — ideal for students applying across the UK and US.',email:'priya@gradguide.org',phone:'+44 20 7946 0102'},
+  {n:'Marcus Bennett',role:'Wellbeing Counsellor',ic:'🧠',c:'#6d3bf5',bio:'Supports students through application stress and big decisions with a calm, steady approach.',email:'marcus@gradguide.org',phone:'+1 (555) 014-5567'},
+  {n:'Sofia Marchetti',role:'School Liaison',ic:'🤝',c:'#c83b52',bio:'Coordinates with teachers and counsellors on transcripts, references and predicted grades.',email:'sofia@gradguide.org',phone:'+1 (555) 014-3398'},
+  {n:'David Chen',role:'Financial Aid Adviser',ic:'🏦',c:'#2f7fd1',bio:'Demystifies FAFSA, CSS Profile, loans and budgeting so cost never blocks the right school.',email:'david@gradguide.org',phone:'+1 (555) 014-7712'},
+];
+/* Real, free courses scouted from trusted providers */
+const COURSES=[
+  {n:'CS50: Introduction to Computer Science',prov:'Harvard',fields:['Computer Science','Engineering'],level:'Beginner',url:'https://pll.harvard.edu/course/cs50-introduction-computer-science',desc:'The classic introduction to programming and computer science — free to audit.'},
+  {n:'CS50’s Introduction to Programming with Python',prov:'Harvard',fields:['Computer Science'],level:'Beginner',url:'https://pll.harvard.edu/course/cs50s-introduction-programming-python',desc:'Learn Python from scratch with hands-on problem sets.'},
+  {n:'Responsive Web Design Certification',prov:'freeCodeCamp',fields:['Computer Science','Arts & Design'],level:'Beginner',url:'https://www.freecodecamp.org/learn/2022/responsive-web-design/',desc:'Build real websites with HTML and CSS — fully free certificate.'},
+  {n:'The Odin Project — Full Stack',prov:'The Odin Project',fields:['Computer Science'],level:'Intermediate',url:'https://www.theodinproject.com/',desc:'A complete, free path to full-stack web development.'},
+  {n:'CS50’s Introduction to AI with Python',prov:'Harvard',fields:['Computer Science','Sciences'],level:'Intermediate',url:'https://pll.harvard.edu/course/cs50s-introduction-artificial-intelligence-python',desc:'Foundations of modern AI: search, learning, and neural networks.'},
+  {n:'Physics I: Classical Mechanics (8.01)',prov:'MIT OpenCourseWare',fields:['Engineering','Sciences'],level:'Intermediate',url:'https://ocw.mit.edu/courses/8-01sc-classical-mechanics-fall-2016/',desc:'MIT’s full introductory physics course with video lectures and problems.'},
+  {n:'Multivariable Calculus (18.02)',prov:'MIT OpenCourseWare',fields:['Engineering','Sciences'],level:'Advanced',url:'https://ocw.mit.edu/courses/18-02sc-multivariable-calculus-fall-2010/',desc:'University-level calculus, free and self-paced.'},
+  {n:'Math: Calculus & Beyond',prov:'Khan Academy',fields:['Sciences','Engineering'],level:'Beginner',url:'https://www.khanacademy.org/math',desc:'Practice-driven lessons from algebra through calculus.'},
+  {n:'Biology',prov:'Khan Academy',fields:['Medicine / Health','Sciences'],level:'Beginner',url:'https://www.khanacademy.org/science/biology',desc:'Cells, genetics, evolution and more — clear and free.'},
+  {n:'Introduction to Psychology',prov:'Yale (Coursera)',fields:['Medicine / Health','Humanities'],level:'Beginner',url:'https://www.coursera.org/learn/introduction-psychology',desc:'Yale’s broad overview of the mind and behaviour — free to audit.'},
+  {n:'Fundamentals of Neuroscience',prov:'Harvard',fields:['Medicine / Health','Sciences'],level:'Intermediate',url:'https://pll.harvard.edu/course/fundamentals-neuroscience-part-1-electrical-properties-neuron',desc:'How neurons work, taught by Harvard — free to audit.'},
+  {n:'Financial Markets',prov:'Yale (Coursera)',fields:['Business'],level:'Beginner',url:'https://www.coursera.org/learn/financial-markets-global',desc:'Robert Shiller’s celebrated intro to finance and risk — free to audit.'},
+  {n:'Finance & Capital Markets',prov:'Khan Academy',fields:['Business'],level:'Beginner',url:'https://www.khanacademy.org/economics-finance-domain',desc:'Economics and finance explained from the ground up.'},
+  {n:'New Enterprises (Entrepreneurship)',prov:'MIT OpenCourseWare',fields:['Business'],level:'Intermediate',url:'https://ocw.mit.edu/courses/15-390-new-enterprises-spring-2013/',desc:'MIT’s course on building a startup from idea to launch.'},
+  {n:'Learning How to Learn',prov:'McMaster/UCSD (Coursera)',fields:['Education','Humanities','Sciences'],level:'Beginner',url:'https://www.coursera.org/learn/learning-how-to-learn',desc:'Evidence-based study techniques useful for any subject — free to audit.'},
+  {n:'US Government & Politics',prov:'Khan Academy',fields:['Law & Politics','Humanities'],level:'Beginner',url:'https://www.khanacademy.org/humanities/us-government-and-civics',desc:'How government works — great for law and politics interests.'},
+  {n:'Art History',prov:'Khan Academy',fields:['Arts & Design','Humanities'],level:'Beginner',url:'https://www.khanacademy.org/humanities/art-history',desc:'Explore art across eras and cultures, free.'},
+  {n:'Modern Art & Ideas',prov:'MoMA (Coursera)',fields:['Arts & Design'],level:'Beginner',url:'https://www.coursera.org/learn/modern-art-ideas',desc:'The Museum of Modern Art’s intro to looking at modern art — free to audit.'},
+  {n:'AP Environmental Science',prov:'Khan Academy',fields:['Environment','Sciences'],level:'Beginner',url:'https://www.khanacademy.org/science/ap-college-environmental-science',desc:'Ecosystems, climate and sustainability fundamentals.'},
+  {n:'Sustainable Development',prov:'edX / SDG Academy',fields:['Environment','Law & Politics'],level:'Intermediate',url:'https://www.edx.org/learn/sustainability',desc:'How the world tackles sustainability challenges — free to audit.'},
+];
+
+/* ===================== CURRENCY ===================== */
+const CUR={
+  US:{code:'USD',sym:'$',pro:15,uni:19,grad:11.99,free:0,name:'United States'},
+  SG:{code:'SGD',sym:'S$',pro:20,uni:26,grad:15.99,free:0,name:'Singapore'},
+  GB:{code:'GBP',sym:'£',pro:12,uni:16,grad:9.99,free:0,name:'United Kingdom'},
+  EU:{code:'EUR',sym:'€',pro:14,uni:18,grad:10.99,free:0,name:'Eurozone'},
+  IN:{code:'INR',sym:'₹',pro:999,uni:1299,grad:799,free:0,name:'India'},
+  AU:{code:'AUD',sym:'A$',pro:23,uni:29,grad:17.99,free:0,name:'Australia'},
+  CA:{code:'CAD',sym:'C$',pro:21,uni:27,grad:16.99,free:0,name:'Canada'},
+  AE:{code:'AED',sym:'AED ',pro:55,uni:69,grad:44,free:0,name:'United Arab Emirates'},
+  MY:{code:'MYR',sym:'RM',pro:69,uni:89,grad:54.99,free:0,name:'Malaysia'},
+  PH:{code:'PHP',sym:'₱',pro:849,uni:1099,grad:679,free:0,name:'Philippines'},
+};
+const TZ_MAP={'Asia/Singapore':'SG','Asia/Kuala_Lumpur':'MY','Asia/Manila':'PH','Asia/Kolkata':'IN','Asia/Dubai':'AE','Europe/London':'GB','Europe/Paris':'EU','Europe/Berlin':'EU','Europe/Madrid':'EU','Australia/Sydney':'AU','America/Toronto':'CA','America/Vancouver':'CA'};
+function guessCountry(){
+  try{ const tz=Intl.DateTimeFormat().resolvedOptions().timeZone; if(TZ_MAP[tz])return TZ_MAP[tz];
+    const r=(navigator.language.split('-')[1]||'').toUpperCase(); if(CUR[r])return r; }catch(e){}
+  return 'US';
+}
+function currentCur(){return CUR[state.currency]||CUR.US}
+function onceFee(v){return Math.round(v*2)} // one-time license fee = 2x the monthly subscription
+function setCurrency(c){state.currency=c;save();renderPricing()}
+function renderPricing(){
+  const sel=document.getElementById('curSel'); if(!sel)return;
+  if(!state.currency)state.currency=guessCountry();
+  sel.innerHTML=Object.keys(CUR).map(k=>`<option value="${k}" ${k===state.currency?'selected':''}>${CUR[k].name} (${CUR[k].code})</option>`).join('');
+  const c=currentCur();
+  document.getElementById('freePrice').innerHTML=`${c.sym}0<small> /mo</small>`;
+  document.getElementById('proPrice').innerHTML=`${c.sym}${c.pro}<small> /mo</small>`;
+  document.getElementById('proYr').innerHTML=`<b>${c.sym}${onceFee(c.pro)}</b> one-time license fee, then ${c.sym}${c.pro}/mo to keep it`;
+  document.getElementById('uniPrice').innerHTML=`${c.sym}${c.uni}<small> /mo</small>`;
+  document.getElementById('uniYr').innerHTML=`<b>${c.sym}${onceFee(c.uni)}</b> one-time license fee, then ${c.sym}${c.uni}/mo to keep it`;
+  document.getElementById('gradPrice').innerHTML=`${c.sym}${c.grad}<small> /mo</small>`;
+  document.getElementById('gradYr').innerHTML=`<b>${c.sym}${onceFee(c.grad)}</b> one-time license fee, then ${c.sym}${c.grad}/mo to keep it`;
+  document.getElementById('curGuess').textContent = state.currency===guessCountry() ? '· detected automatically' : '';
+}
+function choosePro(){
+  const c=currentCur();
+  toggleChat(true);
+  pushBot(`Nice — to unlock the **Student License**: a one-time **${c.sym}${onceFee(c.pro)}** license fee, then **${c.sym}${c.pro}/mo** to keep it active (billed in ${c.code}). Cancel the subscription anytime.\n\nIt unlocks a fully personalised experience for high-school applicants:\n- Unlimited counsellor conversations\n- Personalised essay & statement reviews\n- A monthly 1:1 specialist session\n- Deadline reminders & alerts\n- Full scholarship auto-matching\n- Application progress tracker\n- Curriculum-aware advice (IB, A-Levels, AP)\n\nThis is a prototype, so checkout isn’t live yet — tell me what you’d use most and I’ll tailor it.`);
+}
+function chooseUni(){
+  const c=currentCur();
+  toggleChat(true);
+  pushBot(`Great — to unlock the **University Student License**: a one-time **${c.sym}${onceFee(c.uni)}** license fee, then **${c.sym}${c.uni}/mo** to keep it active (billed in ${c.code}). Cancel the subscription anytime.\n\nBuilt for students already at university:\n- Everything in the Student License\n- Module & major/minor selection guidance\n- Internship & placement matching\n- Resume / CV & LinkedIn reviews\n- Exchange & study-abroad planning\n- Research & graduate-funding finder\n- Two 1:1 specialist sessions a month\n- Career planning & networking tools\n\nCheckout isn’t live in this prototype — tell me your year and course and I’ll start helping now.`);
+}
+function chooseGrad(){
+  const c=currentCur();
+  toggleChat(true);
+  pushBot(`Great choice — to unlock the **Alumni** license: a one-time **${c.sym}${onceFee(c.grad)}** license fee, then **${c.sym}${c.grad}/mo** to keep it active (billed in ${c.code}). Cancel the subscription anytime.\n\nIt unlocks:\n- Career & job-search guidance\n- Resume / CV & cover-letter reviews\n- Internship & entry-level job matching\n- Graduate school (Master’s / PhD) application support\n- Interview prep & mock interviews\n- Salary & offer negotiation coaching\n- LinkedIn optimisation and alumni mentor connections\n\nCheckout isn’t live in this prototype — but tell me where you are (job hunting, grad school, switching fields) and I’ll start helping right now.`);
+}
+
+/* ===================== ROUTER ===================== */
+function goPage(pg){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+pg).classList.add('active');
+  document.querySelectorAll('.nav-links a.link').forEach(a=>a.classList.toggle('on',a.dataset.pg===pg));
+  document.getElementById('navLinks').classList.remove('open');
+  window.scrollTo(0,0);
+  if(pg==='explore')renderExplore();
+  if(pg==='contacts')renderPros();
+  if(pg==='courses')renderCourses();
+  if(pg==='pricing')renderPricing();
+}
+
+/* ===================== QUIZ ===================== */
+let quiz;
+function startQuiz(){ if(state.profile){goPage('explore');return} openQuiz() }
+function openQuiz(){ quiz={step:0,name:'',email:'',level:'',board:'',school:'',schoolCountry:'',gpa:'',interests:[],goal:'',timeline:''}; document.getElementById('authOverlay').classList.remove('hidden'); renderQuiz() }
+function closeAuth(){ document.getElementById('authOverlay').classList.add('hidden') }
+const QSTEPS=8;
+function renderQuiz(){
+  const b=document.getElementById('authBody'); const pct=Math.round((quiz.step/QSTEPS)*100); let inner='';
+  if(quiz.step===0){
+    inner=`<div class="eyebrow" style="margin-bottom:6px">Placement test</div><h3>Find your best-fit course &amp; universities</h3><p class="sub">Answer a few quick questions and we’ll match you to the course that suits you best — and the universities to take it at.</p>
+      <div class="field"><label>Your name</label><input class="input" id="qName" value="${quiz.name}" placeholder="Alex Rivera"></div>
+      <div class="field"><label>Email</label><input class="input" id="qEmail" value="${quiz.email}" placeholder="you@email.com"></div>
+      <div class="field"><label>Create a password</label><input class="input" type="password" placeholder="••••••••"></div>
+      <div class="nav-row"><a class="note" style="cursor:pointer;align-self:center" onclick="closeAuth()">Skip — just browse</a><button class="btn btn-primary" onclick="qNext0()">Start the test →</button></div>`;
+  } else if(quiz.step===1){ inner=qBlock('What stage are you at?','This helps us tailor the timeline.',grid(['9th / 10th grade','11th grade (junior)','12th grade (senior)','Gap year / other'],'level'));
+  } else if(quiz.step===2){ inner=qBlock('Which curriculum / board do you study?','So we read your grades correctly and match the right entry routes.',gridFull(['International Baccalaureate (IB)','IGCSE / Cambridge','A-Levels','AP / US High School Diploma','Other / National board'],'board'));
+  } else if(quiz.step===3){ inner=`<div class="qtitle">Which school do you currently attend?</div><p class="qhint">This helps us see how well your school supports applications to your target universities. Optional, but useful.</p>
+      <div class="field"><input class="input" id="qSchool" value="${esc(quiz.school)}" placeholder="e.g. United World College of South East Asia"></div>
+      <div class="field"><label>Country of your school</label><input class="input" id="qSchoolCountry" value="${esc(quiz.schoolCountry||'')}" placeholder="e.g. Singapore"></div>
+      <div class="nav-row"><button class="btn btn-ghost" onclick="qBack()">← Back</button><button class="btn btn-primary" onclick="qSchoolNext()">Continue →</button></div>`;
+  } else if(quiz.step===4){ inner=qBlock('How are your grades?','A rough range is fine — no pressure.',grid(['Mostly A’s / Top marks','A’s & B’s / Above average','B’s / Average','Still improving'],'gpa'));
+  } else if(quiz.step===5){ inner=`<div class="qtitle">What interests you?</div><p class="qhint">Pick all that apply — this drives your matches and courses.</p><div class="chip-row">${INTERESTS.map(([t,e])=>`<button class="chip ${quiz.interests.includes(t)?'sel':''}" onclick="toggleInt('${t}')">${t}</button>`).join('')}</div>${navRow(quiz.interests.length>0)}`;
+  } else if(quiz.step===6){ inner=qBlock('What’s your main goal?','Your north star for this journey.',gridFull(['Get into a top-ranked university','Find affordable schools & scholarships','Study a specific field I love','Study abroad','Still exploring my options'],'goal'));
+  } else if(quiz.step===7){ inner=qBlock('When do you apply?','So we can prioritise your deadlines.',grid(['This year (2026-27)','Next year','In 2+ years','Not sure yet'],'timeline'));
+  } else {
+    const rec=previewMajor();
+    inner=`<h3>Your result, ${esc(quiz.name)||'there'}</h3><p class="sub">Based on your answers, here’s where you fit best:</p>
+      <div style="background:linear-gradient(135deg,#101a36,#21356a);color:#fff;border-radius:14px;padding:20px;margin-bottom:14px">
+        <div class="eyebrow" style="color:color-mix(in srgb,var(--accent),#fff 55%)">Best-fit course</div>
+        <div style="font-size:23px;font-weight:820;margin:6px 0 8px">${esc(rec.major)}</div>
+        <div style="font-size:13px;color:#aeb8d4">Top universities: ${rec.schools.map(s=>esc(s.n)).join(' · ')||'—'}</div>
+      </div>
+      <div style="background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:8px;font-size:14px;line-height:1.9">
+        <div><b>Curriculum:</b> ${esc(quiz.board)||'—'}</div><div><b>School:</b> ${esc(quiz.school)||'—'}${quiz.schoolCountry?` (${esc(quiz.schoolCountry)})`:''}</div><div><b>Grades:</b> ${esc(quiz.gpa)||'—'}</div><div><b>Interests:</b> ${esc(quiz.interests.join(', '))||'—'}</div><div><b>Goal:</b> ${esc(quiz.goal)||'—'}</div></div>
+      <div class="nav-row"><button class="btn btn-ghost" onclick="quiz.step=7;renderQuiz()">← Back</button><button class="btn btn-primary" onclick="finishQuiz()">See my full dashboard →</button></div>`;
+  }
+  b.innerHTML=(quiz.step>0?`<div class="prog"><i style="width:${pct}%"></i></div>`:'')+inner;
+}
+function qSchoolNext(){quiz.school=document.getElementById('qSchool').value;quiz.schoolCountry=document.getElementById('qSchoolCountry').value;quiz.step=4;renderQuiz()}
+function qBlock(t,h,o){return `<div class="qtitle">${t}</div><p class="qhint">${h}</p>${o}`}
+function grid(arr,key){return `<div class="opts cols">${arr.map(o=>`<button class="opt ${quiz[key]===o?'sel':''}" onclick="pick('${key}',this)" data-v="${o}">${o}</button>`).join('')}</div>`+navRow(quiz[key])}
+function gridFull(arr,key){return `<div class="opts">${arr.map(o=>`<button class="opt ${quiz[key]===o?'sel':''}" onclick="pick('${key}',this)" data-v="${o}">${o}</button>`).join('')}</div>`+navRow(quiz[key])}
+function navRow(canNext){return `<div class="nav-row"><button class="btn btn-ghost" onclick="qBack()">← Back</button><button class="btn btn-primary" ${canNext?'':'disabled style="opacity:.4;cursor:not-allowed"'} onclick="qFwd()">Continue →</button></div>`}
+function qNext0(){quiz.name=document.getElementById('qName').value;quiz.email=document.getElementById('qEmail').value;quiz.step=1;renderQuiz()}
+function qBack(){quiz.step--;renderQuiz()}function qFwd(){quiz.step++;renderQuiz()}
+function pick(k,el){quiz[k]=el.dataset.v;renderQuiz()}
+function toggleInt(t){const i=quiz.interests.indexOf(t);i>=0?quiz.interests.splice(i,1):quiz.interests.push(t);renderQuiz()}
+function finishQuiz(){
+  state.profile={name:quiz.name||'Student',email:quiz.email,level:quiz.level,board:quiz.board,school:quiz.school,schoolCountry:quiz.schoolCountry,gpa:quiz.gpa,interests:quiz.interests,goal:quiz.goal,timeline:quiz.timeline};
+  state.chat=[];save();closeAuth();seedChat();goPage('explore');setCta();toggleChat(true);
+}
+function setCta(){const c=document.getElementById('ctaBtn');if(state.profile){c.textContent='My Dashboard';c.onclick=()=>goPage('explore')}else{c.textContent='Get started';c.onclick=startQuiz}}
+
+/* ===================== MATCHING ===================== */
+function studentLevel(){const g=state.profile?state.profile.gpa:'';if(/Mostly A/.test(g))return 3;if(/A’s & B/.test(g))return 2;if(/B’s/.test(g))return 1;return 1}
+function scoreSchool(s){const p=state.profile;let sc=50;const ov=s.fields.filter(f=>p.interests.includes(f)).length;sc+=ov*11;
+  const strong=/3.7|Mostly A/.test(p.gpa),mid=/3.3|A’s & B/.test(p.gpa);
+  if(s.tier==='reach')sc+=strong?14:(mid?2:-12);if(s.tier==='target')sc+=strong?10:(mid?12:4);if(s.tier==='safety')sc+=10;
+  if(/affordable/i.test(p.goal)&&/\$3|\$4|€|£|S\$/.test(s.cost))sc+=8;if(/top-ranked/i.test(p.goal)&&s.tier==='reach')sc+=8;if(/abroad/i.test(p.goal)&&!/USA/.test(s.loc))sc+=12;
+  return Math.max(38,Math.min(98,sc+ov));}
+function rankedSchools(){return SCHOOLS.map(s=>({...s,score:scoreSchool(s)})).sort((a,b)=>b.score-a.score)}
+function scoreSch(s){const p=state.profile;let sc=55;if(s.fields.includes('*'))sc+=15;sc+=s.fields.filter(f=>p.interests.includes(f)).length*16;if(/affordable|scholarship/i.test(p.goal))sc+=8;return Math.max(45,Math.min(98,sc))}
+function rankedSch(){return SCHOLARSHIPS.map(s=>({...s,score:scoreSch(s)})).sort((a,b)=>b.score-a.score)}
+const MAJORS={'Computer Science':'Computer Science','Engineering':'Engineering','Business':'Business & Economics','Medicine / Health':'Medicine & Health Sciences','Arts & Design':'Arts & Design','Law & Politics':'Law & Political Science','Sciences':'Natural Sciences','Humanities':'Humanities','Education':'Education','Environment':'Environmental Science'};
+function recommendMajor(){const p=state.profile;if(!p||!p.interests.length)return null;
+  // primary = interest with the most strong-school backing, tie-broken by first chosen
+  let best=p.interests[0],bestN=-1;
+  p.interests.forEach(it=>{const n=SCHOOLS.filter(s=>s.fields.includes(it)).length;if(n>bestN){bestN=n;best=it}});
+  const primary=best,secondary=p.interests.find(i=>i!==primary);
+  const schools=rankedSchools().filter(s=>s.fields.includes(primary)).slice(0,4);
+  return {major:MAJORS[primary]||primary,primary,secondary,schools};}
+function allocHTML(){const r=recommendMajor();if(!r)return '';const p=state.profile;
+  const why=`Matched to your interest in ${r.primary}${r.secondary?` and ${r.secondary}`:''}, your ${esc(p.gpa)} record and your goal to ${esc((p.goal||'find the right fit').toLowerCase())}.`;
+  const alt=r.secondary?`<div class="alt">Strong second option: <b style="color:#fff">${MAJORS[r.secondary]||r.secondary}</b></div>`:'';
+  return `<div class="alloc"><div class="alloc-l"><div class="eyebrow">Your best-fit course</div><h2>${esc(r.major)}</h2><p>${why}</p>${alt}</div>
+    <div class="alloc-r"><div class="eyebrow">Top universities to take it</div>${r.schools.map(s=>`<div class="alloc-u"><span style="display:flex;align-items:center"><b>${s.n}</b><span class="tag ${s.tier}">${s.tier}</span></span><span>${s.loc} · ${s.score}%</span></div>`).join('')}</div></div>`;}
+function previewMajor(){const ints=(quiz&&quiz.interests)||[];if(!ints.length)return {major:'A broad first year while you explore',schools:[]};
+  let best=ints[0],bestN=-1;ints.forEach(it=>{const n=SCHOOLS.filter(s=>s.fields.includes(it)).length;if(n>bestN){bestN=n;best=it}});
+  return {major:MAJORS[best]||best,schools:SCHOOLS.filter(s=>s.fields.includes(best)).slice(0,3)};}
+const LVLN={Beginner:1,Intermediate:2,Advanced:3};
+function scoreCourse(c){const p=state.profile;if(!p)return 50;let sc=40;
+  sc+=c.fields.filter(f=>p.interests.includes(f)).length*20;
+  const diff=Math.abs(LVLN[c.level]-studentLevel());sc+= diff===0?14:(diff===1?7:0);
+  if(/specific field/i.test(p.goal)&&c.fields.some(f=>p.interests.includes(f)))sc+=6;
+  return Math.max(30,Math.min(99,sc));}
+function rankedCourses(){return COURSES.map(c=>({...c,score:scoreCourse(c)})).sort((a,b)=>b.score-a.score)}
+
+/* ===================== EXPLORE ===================== */
+function renderExplore(){
+  const locked=document.getElementById('exploreLocked'),app=document.getElementById('exploreApp');
+  if(!state.profile){locked.classList.remove('hidden');app.classList.add('hidden');return}
+  locked.classList.add('hidden');app.classList.remove('hidden');
+  const p=state.profile,rs=rankedSchools(),rc=rankedCourses();
+  document.getElementById('allocBox').innerHTML=allocHTML();
+  document.getElementById('dashHi').textContent=`Welcome back, ${p.name.split(' ')[0]}`;
+  document.getElementById('sMatch').textContent=rs[0].score+'%';
+  document.getElementById('sCourses').innerHTML=rc.filter(c=>c.score>=60).length+' <small>for you</small>';
+  document.getElementById('dashSchools').innerHTML=rs.slice(0,3).map(schoolRow).join('');
+  document.getElementById('allSchools').innerHTML=rs.map(schoolRow).join('');
+  document.getElementById('allScholarships').innerHTML=rankedSch().map(schRow).join('');
+  document.getElementById('dashCourses').innerHTML=rc.slice(0,3).map(courseRowMini).join('');
+  document.getElementById('recoCourses').innerHTML=rc.slice(0,8).map(courseRowMini).join('');
+  renderDeadlines();
+  setProv(state.settings.provider);document.getElementById('apiKey').value=state.settings.key||'';document.getElementById('model').value=state.settings.model||'';
+}
+function dtab(d){
+  const map={courses:'coursesreco'};const id=map[d]||d;
+  document.querySelectorAll('#page-explore .tab').forEach(t=>t.classList.toggle('on',t.dataset.d===d));
+  document.querySelectorAll('#page-explore .dview').forEach(v=>v.classList.remove('on'));
+  document.getElementById('d-'+id).classList.add('on');
+}
+function uniInitials(n){return n.replace(/^(University of |The )/,'').split(/[ ,]+/).filter(Boolean).map(w=>w[0]).slice(0,2).join('').toUpperCase()}
+function schoolRow(s){const meta=[s.loc, s.rate!=='—'?`${s.rate} admit rate`:'', s.sat!=='—'?`Entry ${s.sat}`:'', s.cost].filter(Boolean);
+  return `<div class="row-item"><div class="uni-logo" style="background:linear-gradient(135deg,var(--accent),var(--accent-dark))">${uniInitials(s.n)}</div><div class="row-main"><b>${s.n}</b> <span class="tag ${s.tier}">${s.tier}</span><div class="meta">${meta.map(m=>`<span>${m}</span>`).join('')}</div></div><div class="match"><div class="pct" style="color:${s.score>80?'#0f9a78':s.score>65?'#b7791f':'#c83b52'}">${s.score}%</div><div class="lab">match</div></div></div>`}
+function schRow(s){return `<div class="row-item"><div class="uni-logo" style="background:linear-gradient(135deg,var(--accent),var(--accent-dark))">${s.n.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase()}</div><div class="row-main"><b>${s.n}</b><div class="meta"><span>${s.amt}</span><span>${s.crit}</span><span>Due ${s.due}</span></div></div><div class="match"><div class="pct" style="color:${s.score>80?'#0f9a78':'#b7791f'}">${s.score}%</div><div class="lab">fit</div></div></div>`}
+function courseRowMini(c){return `<div class="row-item"><div class="uni-logo" style="background:linear-gradient(135deg,var(--accent),var(--accent-dark))">${c.prov[0]}</div><div class="row-main"><b>${c.n}</b> <span class="lvl ${c.level}">${c.level}</span><div class="meta"><span>${c.prov}</span><span class="badge-free">FREE</span><a class="open" href="${c.url}" target="_blank" rel="noopener">Open on ${c.prov} ↗</a></div></div><div class="match"><div class="pct" style="color:${c.score>75?'#0f9a78':'#b7791f'}">${c.score}%</div><div class="lab">fit</div></div></div>`}
+function daysUntil(d){return Math.ceil((new Date(d)-new Date())/(864e5))}
+function renderDeadlines(){const sorted=[...DEADLINES].sort((a,b)=>new Date(a.d)-new Date(b.d));const next=sorted.find(d=>daysUntil(d.d)>=0)||sorted[0];
+  document.getElementById('sNext').innerHTML=`${new Date(next.d).toLocaleDateString('en-US',{month:'short',day:'numeric'})} <small>${esc(next.t.slice(0,14))}</small>`;
+  document.getElementById('dashDeadlines').innerHTML=sorted.slice(0,4).map(dlRow).join('');document.getElementById('allDeadlines').innerHTML=sorted.map(dlRow).join('');}
+function dlRow(d){const n=daysUntil(d.d);const cls=n<30?'soon':n<75?'mid':'far';const done=state.doneDeadlines.includes(d.t);const dt=new Date(d.d);
+  return `<div class="dl-item"><div class="check ${done?'done':''}" onclick="toggleDL('${d.t.replace(/'/g,'')}')">${done?'✓':''}</div><div class="dl-date"><b>${dt.getDate()}</b><span>${dt.toLocaleDateString('en-US',{month:'short'})}</span></div><div class="dl-main"><b>${d.t}</b><div class="sub">${d.s}</div></div><div class="dl-left ${cls}">${n<0?'passed':n+' days'}</div></div>`}
+function toggleDL(t){const i=state.doneDeadlines.indexOf(t);i>=0?state.doneDeadlines.splice(i,1):state.doneDeadlines.push(t);save();renderDeadlines()}
+
+/* ===================== COURSES PAGE ===================== */
+let courseFilter={field:'All',level:'All'};
+function renderCourses(){
+  const fields=['All',...INTERESTS.map(i=>i[0])];const levels=['All','Beginner','Intermediate','Advanced'];
+  document.getElementById('fieldFilt').innerHTML=fields.map(f=>`<button class="fbtn ${courseFilter.field===f?'on':''}" onclick="setCourseFilter('field','${f.replace(/'/g,'')}')">${f}</button>`).join('');
+  document.getElementById('levelFilt').innerHTML=levels.map(l=>`<button class="fbtn ${courseFilter.level===l?'on':''}" onclick="setCourseFilter('level','${l}')">${l}</button>`).join('');
+  let list=state.profile?rankedCourses():COURSES.map(c=>({...c,score:0}));
+  if(courseFilter.field!=='All')list=list.filter(c=>c.fields.includes(courseFilter.field));
+  if(courseFilter.level!=='All')list=list.filter(c=>c.level===courseFilter.level);
+  document.getElementById('courseGrid').innerHTML=list.map(courseCard).join('')||'<p class="note">No courses match those filters.</p>';
+}
+function setCourseFilter(k,v){courseFilter[k]=v;renderCourses()}
+function courseCard(c){return `<div class="course clk" onclick="window.open('${c.url}','_blank','noopener')">
+  <div class="prov"><span class="pv">${c.prov}</span><span class="badge-free">FREE</span></div>
+  <h4>${c.n}</h4><p>${c.desc}</p>
+  <div class="tags"><span class="lvl ${c.level}">${c.level}</span>${c.fields.slice(0,2).map(f=>`<span class="fchip">${f}</span>`).join('')}</div>
+  <a class="open" href="${c.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Open on ${c.prov} ↗</a></div>`}
+
+/* ===================== CONTACTS ===================== */
+function proInitials(n){return n.replace(/^(Dr\.|Prof\.|Mr\.|Ms\.|Mrs\.)\s*/,'').split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase()}
+function renderPros(){document.getElementById('proGrid').innerHTML=PROS.map(p=>`<div class="pro"><div class="top"><div class="pic" style="background:linear-gradient(135deg,var(--accent),var(--accent-dark))">${proInitials(p.n)}</div><div><h4>${p.n}</h4><div class="role">${p.role}</div></div></div><p class="bio">${p.bio}</p><div class="det"><span><b style="color:var(--muted);font-weight:700;min-width:48px;display:inline-block">Email</b> <a href="mailto:${p.email}" style="color:var(--brand);font-weight:600">${p.email}</a></span><span><b style="color:var(--muted);font-weight:700;min-width:48px;display:inline-block">Phone</b> <a href="tel:${p.phone.replace(/[^+\d]/g,'')}" style="color:var(--brand);font-weight:600">${p.phone}</a></span></div><button class="btn btn-primary btn-block" onclick="requestSession('${esc(p.n)}','${esc(p.role)}')">Request a session</button></div>`).join('')}
+function requestSession(n,r){toggleChat(true);document.getElementById('chatBox').value=`I’d like to request a session with ${n}, your ${r}.`;sendChat()}
+
+/* ===================== CHAT ===================== */
+let chatOpen=false;
+function toggleChat(open){chatOpen=open===undefined?!chatOpen:open;document.getElementById('chatdock').classList.toggle('open',chatOpen);document.getElementById('fab').classList.toggle('hidden',chatOpen);
+  if(chatOpen){if(state.chat.length===0)seedChat();else renderChat();renderSuggest();updBanner();document.getElementById('fabBadge').classList.add('hidden');setTimeout(()=>document.getElementById('chatBox').focus(),100)}}
+function resetChat(){state.chat=[];seedChat()}
+function pushBot(t){state.chat.push({role:'assistant',content:t});save();renderChat()}
+function seedChat(){const p=state.profile;let hi;
+  if(p){const r=recommendMajor();hi=`Hi ${p.name.split(' ')[0]} — good to see you.${r?` Your placement test points to **${r.major}** as your best-fit course.`:''} I can help with your universities, applications, essays, scholarships, study technique, or a specific subject. What would you like to work on?`;}
+  else hi=`Hi — I’m your GradGuide counsellor. I focus on education: choosing courses and universities, applications, scholarships, study skills and academic subjects. Take the placement test (Get started) and I’ll tailor everything. What’s on your mind?`;
+  state.chat=[{role:'assistant',content:hi}];save();renderChat();}
+function renderSuggest(){const s=state.profile?['Recommend courses for me','What schools fit me best?','Which scholarships should I apply to?','What should I do first?']:['Recommend free courses','How do I choose universities?','How do scholarships work?','Where do I start?'];
+  document.getElementById('chatSuggest').innerHTML=s.map(t=>`<button class="sugg" onclick="quickAsk('${esc(t)}')">${t}</button>`).join('')}
+function quickAsk(t){document.getElementById('chatBox').value=t;sendChat()}
+function recommendCoursesInChat(){toggleChat(true);document.getElementById('chatBox').value='Recommend free courses for me';sendChat()}
+function renderChat(){document.getElementById('chatScroll').innerHTML=state.chat.map(m=>msgHTML(m.role,m.content)).join('');scrollChat()}
+function userInitial(){const n=state.profile&&state.profile.name?state.profile.name.trim()[0]:'';return (n||'Y').toUpperCase()}
+function msgHTML(role,txt){const u=role==='user';return `<div class="msg ${u?'user':'bot'}"><div class="av">${u?userInitial():'GG'}</div><div class="bubble">${u?esc(txt):mdLite(txt)}</div></div>`}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function mdLite(s){s=esc(s);s=s.replace(/\\n/g,'\n');
+  s=s.replace(/\[([^\]]+)\]\((https?:[^)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');
+  s=s.replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
+  const lines=s.split('\n');let out='',inList=false;
+  for(let ln of lines){if(/^\s*[-•]\s+/.test(ln)){if(!inList){out+='<ul>';inList=true}out+='<li>'+ln.replace(/^\s*[-•]\s+/,'')+'</li>'}else{if(inList){out+='</ul>';inList=false}if(ln.trim())out+='<p>'+ln+'</p>'}}
+  if(inList)out+='</ul>';return out;}
+function scrollChat(){const e=document.getElementById('chatScroll');e.scrollTop=e.scrollHeight}
+function autresize(t){t.style.height='auto';t.style.height=Math.min(t.scrollHeight,120)+'px'}
+function chatKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat()}}
+async function sendChat(){const box=document.getElementById('chatBox');const text=box.value.trim();if(!text)return;box.value='';autresize(box);
+  state.chat.push({role:'user',content:text});renderChat();save();
+  const scroll=document.getElementById('chatScroll');scroll.insertAdjacentHTML('beforeend',`<div class="msg bot" id="typing"><div class="av">GG</div><div class="bubble"><div class="typing"><i></i><i></i><i></i></div></div></div>`);scrollChat();
+  document.getElementById('sendBtn').disabled=true;let reply;
+  try{reply=state.settings.key?await callLLM(text):demoReply(text);}
+  catch(err){reply='Note: '+(err.message||'Could not reach the model. Check your key in Counsellor settings.')+'\n\nHere’s some guidance in the meantime:\n\n'+demoReply(text);}
+  document.getElementById('typing')?.remove();document.getElementById('sendBtn').disabled=false;
+  state.chat.push({role:'assistant',content:reply});save();renderChat();}
+function coursesForPrompt(){return COURSES.map(c=>`${c.n} — ${c.prov} (${c.level}; ${c.fields.join('/')}) ${c.url}`).join('\n')}
+function systemPrompt(){const p=state.profile;
+  let base=`You are the GradGuide counsellor inside the "GradGuide" app: a warm, knowledgeable education and college-admissions guide for a high-school (or recently graduated) student.
+
+SCOPE: Only answer questions related to education — choosing courses/majors and universities, applications and admissions, scholarships and funding, study skills and exam preparation, academic subjects (maths, sciences, English, humanities, computing, etc.), and careers or further study. If asked something clearly unrelated (sport scores, celebrities, dating, crypto prices, etc.), briefly and politely steer back to these topics; do not answer the off-topic part.
+
+STYLE: Be substantive and specific — when a student asks about a subject or a problem, actually teach it: explain the concept, work through the steps, and give a worked example where useful, like an excellent tutor. Don't be vague or just list generic tips. Use short paragraphs and bullet points, and end with a concrete next step or a question that moves things forward. Recommend free courses only from the catalogue below, with the link as a markdown link.`;
+  base+=`\n\nFree course catalogue (all free):\n${coursesForPrompt()}`;
+  if(p){base+=`\n\nStudent profile:\n- Name: ${p.name}\n- Grade level: ${p.level}\n- Curriculum/board: ${p.board||'not given'}\n- Current school: ${p.school||'not given'}${p.schoolCountry?` (${p.schoolCountry})`:''}\n- Grades/achievement: ${p.gpa}\n- Interests: ${p.interests.join(', ')}\n- Main goal: ${p.goal}\n- Timeline: ${p.timeline}\n\nPersonalise to this profile; match course difficulty to their achievement level. Use their curriculum (e.g. IB, A-Levels, AP) to frame entry requirements correctly. If they named a school, you may comment generally on how to strengthen an application from that kind of school and whether its qualification is internationally recognised, but do not invent specific facts, rankings or statistics about a named school you are unsure of.`;
+    const r=recommendMajor(); if(r) base+=`\n\nFrom the placement test, their best-fit course is ${r.major}; suggested universities: ${r.schools.map(s=>s.n).join(', ')}. Reference this when relevant.`;}
+  else base+=`\n\nThe student has no profile yet. Give helpful guidance and suggest the placement test (Get started) for a tailored best-fit course and university shortlist.`;
+  return base;}
+async function callLLM(text){const{provider,key,model}=state.settings;const msgs=state.chat.filter(m=>m.role==='user'||m.role==='assistant').slice(-12);
+  if(provider==='anthropic'){const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'content-type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:model||'claude-haiku-4-5-20251001',max_tokens:1000,system:systemPrompt(),messages:msgs})});const d=await r.json();if(!r.ok)throw new Error(d.error?.message||('API error '+r.status));return d.content.map(c=>c.text).join('');}
+  else{const r=await fetch('https://api.openai.com/v1/chat/completions',{method:'POST',headers:{'content-type':'application/json','authorization':'Bearer '+key},body:JSON.stringify({model:model||'gpt-4o-mini',messages:[{role:'system',content:systemPrompt()},...msgs]})});const d=await r.json();if(!r.ok)throw new Error(d.error?.message||('API error '+r.status));return d.choices[0].message.content;}}
+function demoReply(text){const p=state.profile,t=text.toLowerCase();const name=p?p.name.split(' ')[0]:'';
+  if(/^(hi|hey|hello|yo|sup|hiya|good (morning|afternoon|evening))\b/.test(t)||/^(thanks|thank you|ty|cheers)\b/.test(t))
+    return p?`Hi ${name} — happy to help. I can go deep on your course choice, universities, applications, essays, study technique or a specific subject. What’s on your mind?`:`Hi — I’m the GradGuide counsellor. I focus on education: choosing courses and universities, applications, study skills and school subjects. What would you like help with?`;
+  const offtopic=/(weather|football|soccer|nba|cricket|recipe|cook|girlfriend|boyfriend|dating|movie|netflix|bitcoin|crypto|stock tip|lottery|horoscope|gambling|who will win|sports score)/;
+  const edu=/(stud|exam|test|sat|act|\bib\b|a-?level|gcse|essay|universit|college|course|major|degree|scholar|deadline|applicat|apply|admission|interview|career|intern|resume|\bcv\b|math|algebra|calculus|geometry|physic|chemis|biolog|econ|histor|english|literat|writing|grammar|program|coding|comput|engineer|science|subject|grade|gpa|revis|note|learn|school|class|research|tutor|teacher|recommend|reference|extracurric|gap year|abroad)/;
+  if(offtopic.test(t)&&!edu.test(t))
+    return `I’m an education and college counsellor, so I’ll keep us there — courses, universities, applications, study skills and school subjects. Ask me something like “how do I revise for biology?” or “which course suits me?” and I’ll dive right in.`;
+  if(/major|what (should|do) i study|what to study|which course|right course|career path|stream|which subject|what subject|allocat/.test(t)){
+    if(!p)return `I can allocate you to a best-fit course. Fastest way: take the **placement test** (Get started) — six questions and I’ll name your course and the universities to take it at. Or tell me the subjects you enjoy and what you’re strong at, and I’ll suggest one now.`;
+    const r=recommendMajor();
+    return `From your interest in **${r.primary}**${r.secondary?` and ${r.secondary}`:''}, your ${p.gpa} record and your goal to ${(p.goal||'find a good fit').toLowerCase()}, your best-fit course is:\n\n**${r.major}**\n\nStrong places to study it:\n${r.schools.map(s=>`- **${s.n}** (${s.tier}) — ${s.loc}`).join('\n')}\n\nWant the reasoning, or a comparison with ${r.secondary?(MAJORS[r.secondary]||r.secondary):'another option'}?`;
+  }
+  if(/my school|recogni[sz]ed|does (my|the) school|school help|good enough|reputable|will (my|this) school|right school|my current school/.test(t))
+    return `Universities weigh your **grades, curriculum and what you’ve done** far more than the name of your school. To make any school’s application strong:\n\n- Take the **most rigorous** courses available (IB HL, A-Levels, AP).\n- Keep **consistent grades** in subjects relevant to your course.\n- Add **depth outside class** — projects, competitions, reading, volunteering.\n- Get teachers who **know you well** to write detailed references.\n\n${p&&p.board?`Your **${p.board}** is recognised internationally, which helps.`:'Most national and international curricula are widely recognised.'} Tell me your target universities and I’ll tailor this to them.`;
+  if(/universit|college|where (should|can) i (go|apply)|shortlist|reach school|safety school|match me/.test(t)){
+    if(!p)return `Tell me your intended subject and rough grades and I’ll suggest a balanced list. A good rule: 2-3 reach schools, 3-4 targets and 2 safeties, so you have strong options on results day.`;
+    const top=rankedSchools().slice(0,5);
+    return `Your strongest university matches right now:\n\n${top.map(s=>`- **${s.n}** (${s.tier}) — ${s.loc} · ${s.score}%`).join('\n')}\n\nKeep it balanced: 2-3 reach, 3-4 target, 2 safety. Want me to explain any one, or add options in a specific country?`;
+  }
+  if(/essay|personal statement|common app|supplement|statement of purpose/.test(t))
+    return `Your personal statement should make a reader *see* you:\n\n- **Open with a specific moment**, not a thesis sentence.\n- **Show, don’t tell** — concrete detail and what you learned.\n- Connect it to ${p?`your goal to ${(p.goal||'study what you love').toLowerCase()}`:'where you want to go'}.\n- **End on growth** — who you’re becoming.\n\nWrite a rough draft and paste it here; I’ll give line-level feedback.`;
+  if(/\bmath|algebra|calculus|geometry|trigonom|equation/.test(t))
+    return `Maths clicks when you drill the method, not just the answer:\n\n- **Name the goal** — what is the question asking for?\n- **Pick the tool** — which rule, formula or theorem applies?\n- Work in **small steps**, checking signs and units.\n- Redo it from blank a day later to lock it in.\n\nPaste the exact problem and I’ll work through it step by step.`;
+  if(/physic|chemis|biolog|\bscience\b/.test(t))
+    return `For the sciences, understanding beats memorising:\n\n- Learn the **core concept** first, then the vocabulary around it.\n- **Draw diagrams** (forces, reactions, cycles) from memory.\n- Do **past-paper questions**, not just re-reading.\n- Explain it aloud as if teaching someone.\n\nTell me the exact topic and I’ll break it down.`;
+  if(/english|grammar|literat|comprehension|writing skill|how (to|do i) write/.test(t))
+    return `Strong writing is structure plus clarity:\n\n- **One idea per paragraph**, stated in the first sentence.\n- Back each point with **evidence**, then explain why it matters.\n- Read it **aloud** to catch clunky sentences.\n- Cut any word not doing a job.\n\nShare your draft or the question and I’ll give specific feedback.`;
+  if(/histor|geograph|\becon|politic/.test(t))
+    return `For essay subjects, argument is everything:\n\n- Answer the question **directly** in your first line.\n- Make three points, each with **evidence + analysis**.\n- Show the counter-view, then say why your view holds.\n- End with a judgement, not a summary.\n\nGive me the question and I’ll outline an answer with you.`;
+  if(/program|coding|python|javascript|software|comput science/.test(t))
+    return `Learning to code is built on small, finished projects:\n\n- Start with **CS50** or freeCodeCamp (both free — see Courses).\n- Learn by **building**: a calculator, a to-do app, a simple site.\n- When stuck, read the error, then change one thing at a time.\n- Code a little **every day** rather than rare long bursts.\n\nWant a beginner roadmap for a specific language?`;
+  if(/\bsat\b|\bact\b|\bib\b|a-?level|gcse|exam|study for|revis|past paper|\bmock/.test(t))
+    return `A simple exam plan that works:\n\n- **Diagnose** with one past paper to find weak topics.\n- **Spaced practice**: short sessions over weeks beat cramming.\n- **Active recall**: test yourself, don’t just re-read.\n- **Timed past papers** near the end for exam stamina.\n- Review every mistake and note *why* it happened.\n\nTell me the exam and your date and I’ll sketch a week-by-week schedule.`;
+  if(/how (to|do i) study|focus|concentrat|procrastinat|time management|motivat|organi[sz]e|productiv/.test(t))
+    return `Try this study loop:\n\n- Work in **25-50 min blocks** with short breaks.\n- **One task per block** — phone in another room.\n- Use **active recall + spaced repetition** (flashcards help).\n- Plan tomorrow’s three priorities tonight.\n- Protect sleep — it’s when learning sticks.\n\nWhat’s the biggest issue — focus, time or motivation? I’ll go deeper.`;
+  if(/scholarship|bursary|grant|financial aid|afford|fund|fafsa/.test(t)){const s=p?rankedSch().slice(0,3):SCHOLARSHIPS.slice(0,3);
+    return `Funding strategy:\n\n${s.map(x=>`- **${x.n}** — ${x.amt} (due ${x.due})`).join('\n')}\n\n- File the **FAFSA/CSS Profile** as early as you can.\n- Apply to several **smaller** scholarships — less competition, they add up.\n- Reuse and tailor one strong essay across applications.\n\nWant help matching scholarships to your profile?`;}
+  if(/deadline|when (is|are)|due date|timeline|by when/.test(t)){const d=[...DEADLINES].sort((a,b)=>new Date(a.d)-new Date(b.d)).filter(x=>daysUntil(x.d)>=0).slice(0,4);return `Key dates coming up:\n\n${d.map(x=>`- **${x.t}** — ${new Date(x.d).toLocaleDateString('en-US',{month:'long',day:'numeric'})} (${daysUntil(x.d)} days)`).join('\n')}\n\nTrack them in the Deadlines tab. Want a personalised plan to results day?`;}
+  if(/recommend|reference letter|referee|teacher letter/.test(t))
+    return `Getting great reference letters:\n\n- Ask teachers who **know you well**, not just senior ones.\n- Ask **early** (4-6 weeks ahead) and politely.\n- Give them a short **brag sheet**: goals, projects, moments from their class.\n- Follow up with a thank-you and the deadlines.\n\nWant a template message to ask a teacher?`;
+  if(/interview/.test(t))
+    return `Interview prep that works:\n\n- Be able to say **why this course, why this university** clearly.\n- Re-read your application — they’ll ask about it.\n- Practise **thinking aloud**; it’s about reasoning, not perfect answers.\n- Prepare two thoughtful questions to ask them.\n\nTell me the university and course and I’ll run mock questions.`;
+  if(/extracurric|\bclub|volunteer|leadership|wider/.test(t))
+    return `Quality beats quantity with activities:\n\n- **Depth and commitment** in a few areas say more than a long list.\n- Show **initiative** — start, lead or improve something.\n- Tie it to your intended course where you can.\n- Record what you did and the impact.\n\nTell me your interests and I’ll suggest activities that strengthen your application.`;
+  if(/gap year/.test(t))return `A gap year works well if it’s purposeful:\n\n- Have a clear plan — work, internship, language, project or goal-driven travel.\n- Check whether your offers allow **deferral**.\n- Keep skills warm and document what you learn.\n\nWant help planning one around your intended course?`;
+  if(/abroad|overseas|international student|study in (the )?(uk|us|usa|canada|australia|europe)/.test(t))
+    return `Studying abroad — quick orientation:\n\n- **US**: Common App, holistic review, essays matter a lot, tests often optional.\n- **UK**: UCAS, up to five choices, one personal statement, offers on predicted grades.\n- Budget for **tuition + living + visa**, and check international scholarships.\n\nWhich country are you considering? I’ll go into detail.`;
+  if(/career|\bjob|resume|\bcv\b|internship|graduate scheme|after (uni|college|graduat)/.test(t))
+    return `Career basics:\n\n- A resume is **evidence of impact** — use numbers and action verbs.\n- Tailor it to each role; mirror the keywords in the posting.\n- Build a clean **LinkedIn** and a small portfolio.\n- Apply early and ask for **informational chats**, not just jobs.\n\nThe **Alumni** plan adds resume reviews, interview prep and grad-school support. Want feedback on your resume now?`;
+  if(/price|cost|subscription|plan|licen[sc]e|\bpro\b|pay|upgrade|premium|alumni plan/.test(t)){const c=currentCur();return `Free to start. Each paid **license** has a **one-time fee to unlock it, then a monthly subscription to keep it active**:\n\n- **Free** — ${c.sym}0: matches, course recommendations, deadline calendar and counsellor chat.\n- **Student License** — ${c.sym}${onceFee(c.pro)} once, then ${c.sym}${c.pro}/mo: high-school applicants — unlimited chat, essay reviews, monthly 1:1, reminders, scholarship matching, tracker, curriculum-aware advice.\n- **University Student License** — ${c.sym}${onceFee(c.uni)} once, then ${c.sym}${c.uni}/mo: current uni students — internships, module/major guidance, CV & LinkedIn reviews, exchange planning, two 1:1s a month.\n- **Alumni** — ${c.sym}${onceFee(c.grad)} once, then ${c.sym}${c.grad}/mo: career help, resume reviews, grad-school support.\n\nCancel the subscription anytime. See the **Pricing** page to compare.`;}
+  if(/specialist|adviser|advisor|book a session|talk to (a )?(person|human)|counsel/.test(t))return `Booking a human specialist is a good call.\n\nOpen the **Contacts** page and choose the adviser who fits — admissions, scholarships, UK/US, wellbeing, school liaison or financial aid — then **Request a session**. Tell me the issue and I’ll point you to the right one.`;
+  if(/course|free course|learn online|online class|mooc/.test(t)){const rc=(p?rankedCourses():COURSES.map(c=>({...c,score:0}))).slice(0,4);
+    return `Free courses I’d start with${p?` for your interests`:''}:\n\n${rc.map(c=>`- **${c.n}** — ${c.prov} · ${c.level}\n  [Open on ${c.prov}](${c.url})`).join('\n')}\n\nAll free, and every link goes to the official provider. Want me to filter by subject or level?`;}
+  if(/first|where (do|should) i (start|begin)|next step|what now|get started/.test(t))
+    return p?`Your next three steps, ${name}:\n\n- **1.** Confirm your best-fit course on the dashboard and shortlist 6-8 universities.\n- **2.** Start one free course in your field this week.\n- **3.** Draft your personal statement.\n\nWhich shall we do first?`:`Start with the **placement test** (Get started): six questions and you’ll get a best-fit course and a university shortlist. Then I can help with courses, essays and deadlines.`;
+  return p?`Here’s where I can help, ${name} — pick one and I’ll go deep:\n\n- **Course & university fit** for your profile\n- **Applications & personal statements**\n- **Study technique & exam prep**\n- **Specific subjects** (maths, sciences, writing and more)\n- **Scholarships & deadlines**\n\nWhat would you like to start with?`:`I focus on education and college guidance: choosing a course and universities, applications, exam prep, study skills and specific subjects. What would you like help with? For a tailored plan, take the **placement test** via Get started.`;}
+
+/* ===================== SETTINGS ===================== */
+function setProv(p){state.settings.provider=p;document.querySelectorAll('#provSeg button').forEach(b=>b.classList.toggle('on',b.dataset.p===p));
+  document.getElementById('keyNote').textContent=p==='anthropic'?'Get a key at console.anthropic.com → API Keys.':'Get a key at platform.openai.com → API Keys.';
+  document.getElementById('model').placeholder=p==='anthropic'?'claude-haiku-4-5-20251001':'gpt-4o-mini';}
+function saveSettings(){state.settings.key=document.getElementById('apiKey').value.trim();state.settings.model=document.getElementById('model').value.trim();save();updBanner();
+  const btn=document.querySelector('#d-settings .btn-primary');btn.parentNode.querySelectorAll('.saved-note').forEach(n=>n.remove());const note=document.createElement('span');note.className='note saved-note';note.style.marginLeft='12px';note.textContent=state.settings.key?'✓ Saved — live answers enabled':'✓ Saved — demo mode';btn.after(note);}
+function updBanner(){document.getElementById('aiBanner').classList.add('hidden')} /* keep the counsellor clean for public visitors; settings tab still lets power users add a key */
+
+/* ===================== INIT ===================== */
+if(!state.currency)state.currency=guessCountry();
+if(!state.theme)state.theme=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';
+applyTheme(state.theme);
+if(state.accent)applyAccent(state.accent);
+setCta();
+if(!state.profile){openQuiz();setTimeout(()=>{if(!chatOpen)document.getElementById('fabBadge').classList.remove('hidden')},800)}else{document.getElementById('fabBadge').classList.add('hidden')}
+</script>
+</body>
+</html>
